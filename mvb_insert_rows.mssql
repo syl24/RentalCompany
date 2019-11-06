@@ -1,7 +1,17 @@
-insert into branch values (1, 'Main', '1234 Main St.', 'Vancouver', 5551234);
-insert into branch values (2, 'Richmond', '23 No.3 Road', 'Richmond', 5552331);
-insert into branch values (3, 'West Creek', '251 Creek Rd.', 'Sechelt', 5552511);
-insert into branch values (4, 'Blenheim', '1342 W. 22 Ave.', 'Burnaby', 5551342);
+insert into branch values ('Main', 'Vancouver');
+insert into branch values ('Richmond Centre', 'Richmond');
+insert into branch values ('West Creek', 'Sechelt');
+insert into branch values ('Blenheim', 'Burnaby');
+insert into branch values ('Fraser Hwy', 'Aldergrove');
+insert into branch values ('Blundell Center', 'Richmond');
+insert into branch values ('Brandt's Creek', 'Kelowna');
+insert into branch values ('Brentwood Town Centre', 'Burnaby');
+insert into branch values ('Cedar Hills', 'Surrey');
+insert into branch values ('Columbia Place', 'Kamloops');
+insert into branch values ('Coquitlam Centre', 'Coquitlam');
+insert into branch values ('Coronation Mall', 'Ladysmith');
+insert into branch values ('Commons Shopping Centre', 'Duncan');
+insert into branch values ('Richmond No. 3 road', 'Richmond');
 
 insert into driver values (111111111, 'Bob Smith', '111 E. 11 St.', 'Vancouver', TO_DATE('01-JAN-1995', 'DD-MON-YYYY'), 5551111);
 insert into driver values (222222222, 'Candace Walters', '222 E. 22 St.', 'Burnaby', TO_DATE('02-FEB-1996', 'DD-MON-YYYY'), 5552222);
