@@ -4,14 +4,6 @@ create table branch (
 	PRIMARY KEY (branch_location, branch_city) 
 );
 
-create table driver (
-	driver_sin integer not null PRIMARY KEY,
-	driver_name varchar(20) not null,
-	driver_addr varchar(50) not null,
-	driver_city varchar(20) not null,
-	driver_birthdate date not null,
-	driver_phone integer
-);
 
 create table license ( 
 	license_no NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -38,6 +30,19 @@ create table exam (
 
 \\
 create table reservations (
+	reservations_confNo integer not null PRIMARY KEY,
+	vehicletypes_name varchar(20) not null,
+	customers_dlicense varchar(25) not null,
+	timeperiod_fromdate date not null,
+	timeperiod_fromtime time(0) not null,
+	timeperiod_todate date not null,
+	timeperiod_totime time(0) not null,
+	foreign key (vehicletypes_name) references vehicletypes,
+	foreign key (customers_dlicense) references customers,
+	foreign key (timeperiod_fromdate, timeperiod_fromtime, timeperiod_todate, timeperiod_totime) references timeperiod
+);
+
+create table timeperiod (
 
 );
 
@@ -46,20 +51,23 @@ create table rentals (
 );
 
 create table vehicles (
-
-	
-	driver_sin integer not null,
-	branch_id integer not null,
-	exam_date date not null,
-	exam_type char not null,
-	exam_score integer,
-	PRIMARY KEY (driver_sin, branch_id, exam_date),
-	foreign key (driver_sin) references driver,
-	foreign key (branch_id) references branch
+	vehicles_id integer,
+	vehicles_license varchar(20) not null PRIMARY KEY,
+	vehicles_make varchar(20),
+	vehicles_model varchar(10),
+	vehicles_year integer,
+	vehicles_color char,
+	vehicles_odometer integer,
+	vehicles_status varchar(20) not null,
+	vehicletypes_name varchar(20) not null,
+	branch_location varchar(50) not null,
+	branch_city varchar(20) not null,
+	foreign key (branch_location, branch_city) references branch,
+	foreign key (vehicletypes_name) references vehicletypes
 );
 
 create table vehicletypes (
-	vehicletypes_name char not null PRIMARY KEY,
+	vehicletypes_name varchar(20) not null PRIMARY KEY,
 	vehicletypes_features char,
 	vehicletypes_wrate integer,
 	vehicletypes_drate integer,
@@ -70,7 +78,10 @@ create table vehicletypes (
 );
 
 create table customers (
-
+	customers_cellphone varchar(25),
+	customers_name varchar(20),
+	customers_address varchar (50),
+	customers_dlicense integer not null PRIMARY KEY
 );
 
 create table returns (
