@@ -1,9 +1,7 @@
 create table branch ( 
-	branch_id integer not null PRIMARY KEY,
-	branch_name varchar2(20) not null,
-	branch_addr varchar2(50),
-	branch_city varchar2(20) not null,
-	branch_phone integer 
+	branch_location varchar(50) not null,
+	branch_city varchar(20) not null,
+	PRIMARY KEY (branch_location, branch_city) 
 );
 
 create table driver (
@@ -36,6 +34,47 @@ create table exam (
 	PRIMARY KEY (driver_sin, branch_id, exam_date),
 	foreign key (driver_sin) references driver,
 	foreign key (branch_id) references branch
+);
+
+\\
+create table reservations (
+
+);
+
+create table rentals (
+
+);
+
+create table vehicles (
+
+	
+	driver_sin integer not null,
+	branch_id integer not null,
+	exam_date date not null,
+	exam_type char not null,
+	exam_score integer,
+	PRIMARY KEY (driver_sin, branch_id, exam_date),
+	foreign key (driver_sin) references driver,
+	foreign key (branch_id) references branch
+);
+
+create table vehicletypes (
+	vehicletypes_name char not null PRIMARY KEY,
+	vehicletypes_features char,
+	vehicletypes_wrate integer,
+	vehicletypes_drate integer,
+	vehicletypes_hrate integer,
+	vehicletypes_wirate integer,
+	vehicletypes_dirate integer,
+	vehicletypes_krate integer,
+);
+
+create table customers (
+
+);
+
+create table returns (
+
 );
 
 commit;
