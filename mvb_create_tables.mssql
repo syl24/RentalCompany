@@ -20,6 +20,7 @@ create table license (
 	driver_sin integer not null,
 	license_type char not null,
 	license_class integer,
+	
 	license_expiry date not null,
 	issue_date date not null,
 	branch_id integer not null,
