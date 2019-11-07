@@ -62,7 +62,7 @@ create table vehicles (
 
 create table vehicletypes (
 	vehicletypes_name varchar(20) not null PRIMARY KEY,
-	vehicletypes_features char,
+	vehicletypes_features varchar(20),
 	vehicletypes_wrate integer,
 	vehicletypes_drate integer,
 	vehicletypes_hrate integer,
