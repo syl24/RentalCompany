@@ -9,11 +9,22 @@ insert into branch values ('Brentwood Town Centre', 'Burnaby');
 insert into branch values ('Cedar Hills', 'Surrey');
 insert into branch values ('Columbia Place', 'Kamloops');
 insert into branch values ('Coquitlam Centre', 'Coquitlam');
-insert into branch values ('Coronation Mall', 'Ladysmith');
-insert into branch values ('Commons Shopping Centre', 'Duncan');
-insert into branch values ('Richmond No. 3 road', 'Richmond');
 
-insert into reservations values (11111, 'SUV', D101010, '01-MAY-2019', '09:00','01-JUN-2019', '09:00');
+insert into reservations values (10000, 'SUV', D101010, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (10001, 'SUV', D101011, '02-JUN-2019', '10:00','06-JUN-2019', '12:00');
+insert into reservations values (10002, 'SUV', D101020, '04-JUN-2019', '06:00','09-JUN-2019', '18:00');
+
+insert into reservations values (10003, 'SUV', D101021, '02-JUL-2019', '08:00','09-JUL-2019', '19:00');
+insert into reservations values (10004, 'SUV', D101030, '01-AUG-2019', '01:00','07-JUN-2019', '23:00');
+insert into reservations values (10005, 'SUV', D101031, '20-DEC-2019', '05:00','25-DEC-2019', '05:00');
+insert into reservations values (10006, 'SUV', D101040, '01-OCT-2019', '03:00','05-JUN-2019', '19:00');
+
+insert into reservations values (10007, 'SUV', D101041, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (10008, 'SUV', D101050, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (10009, 'SUV', D101051, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (10010, 'SUV', D101060, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+
+
 insert into driver values (222222222, 'Candace Walters', '222 E. 22 St.', 'Burnaby', TO_DATE('02-FEB-1996', 'DD-MON-YYYY'), 5552222);
 insert into driver values (333333333, 'Kara Rops', '333 W. 33 Ave.', 'Richmond', TO_DATE('03-MAR-1990', 'DD-MON-YYYY'), 5553333);
 insert into driver values (444444444, 'Alex Mark', '444 E. 4 Ave.', 'Vancouver', TO_DATE('04-APR-1994', 'DD-MON-YYYY'), 5554444);
