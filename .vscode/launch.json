@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Bank",
+            "request": "launch",
+            "mainClass": "ca.ubc.cs304.controller.Bank"
+        }
+    ]
+}
