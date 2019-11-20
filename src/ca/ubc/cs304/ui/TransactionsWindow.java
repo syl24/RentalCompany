@@ -44,7 +44,7 @@ public class TransactionsWindow extends JFrame implements ActionListener {
 		JLabel query3 = new JLabel("3. Update branch name");
 		JLabel query4 = new JLabel("4. Show branch");
 	    JLabel query5 = new JLabel("5. Quit");
-        JLabel queryLabel = new JLabel("Please choose one of the above 5 options: ")
+        JLabel queryLabel = new JLabel("Please choose one of the above 5 options: ");
 
         JTextField queryField = new JTextField(TEXT_FIELD_WIDTH);
 
@@ -110,8 +110,8 @@ public class TransactionsWindow extends JFrame implements ActionListener {
 	}
 
 
+	@Override
+	public void actionPerformed(ActionEvent actionEvent) {
 
-    }
-
-
+	}
 }
