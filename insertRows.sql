@@ -1,0 +1,137 @@
+insert into branch values ('Main', 'Vancouver');
+insert into branch values ('Richmond Centre', 'Richmond');
+insert into branch values ('West Creek', 'Sechelt');
+insert into branch values ('Blenheim', 'Burnaby');
+insert into branch values ('Fraser Hwy', 'Aldergrove');
+insert into branch values ('Blundell Center', 'Richmond');
+insert into branch values ('Brandt's Creek', 'Kelowna');
+insert into branch values ('Brentwood Town Centre', 'Burnaby');
+insert into branch values ('Cedar Hills', 'Surrey');
+insert into branch values ('Columbia Place', 'Kamloops');
+insert into branch values ('Coquitlam Centre', 'Coquitlam');
+
+insert into reservations values (10000, 'SUV', D101010, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (10001, 'SUV', D101011, '02-JUN-2019', '10:00','06-JUN-2019', '12:00');
+insert into reservations values (10002, 'SUV', D101020, '04-JUN-2019', '06:00','09-JUN-2019', '18:00');
+insert into reservations values (10003, 'SUV', D101021, '02-JUL-2019', '08:00','09-JUL-2019', '19:00');
+insert into reservations values (10004, 'SUV', D101030, '01-AUG-2019', '01:00','07-JUN-2019', '23:00');
+insert into reservations values (10005, 'SUV', D101031, '20-DEC-2019', '05:00','25-DEC-2019', '05:00');
+insert into reservations values (10006, 'SUV', D101040, '21-OCT-2019', '03:00','29-DEC-2019', '19:00');
+insert into reservations values (10007, 'SUV', D101041, '01-SEP-2019', '09:00','19-SEP-2019', '09:00');
+insert into reservations values (10008, 'SUV', D101050, '01-JAN-2020', '10:00','05-JAN-2020', '10:00');
+insert into reservations values (10009, 'SUV', D101051, '09-JAN-2020', '11:00','20-JAN-2020', '13:00');
+insert into reservations values (10010, 'SUV', D101060, '01-JUN-2020', '04:00','05-JUN-2020', '14:00');
+
+insert into reservations values (10011, 'SUV', D101061, '01-SEP-2021', '08:00','02-SEP-2021', '11:00');
+
+insert into reservations values (20000, 'ECONOMY', D201010, '03-MAY-2019', '08:00','05-MAY-2019', '09:00');
+insert into reservations values (20001, 'ECONOMY', D201011, '11-JUN-2019', '10:00','18-JUN-2019', '12:00');
+insert into reservations values (20002, 'ECONOMY', D201020, '03-JUL-2019', '09:00','05-JUL-2019', '09:00');
+insert into reservations values (20003, 'ECONOMY', D201021, '01-JUN-2019', '10:00','05-SEP-2019', '13:00');
+
+insert into reservations values (20004, 'ECONOMY', D201030, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (20005, 'ECONOMY', D201031, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (20006, 'ECONOMY', D201040, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (20007, 'ECONOMY', D201041, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (20008, 'ECONOMY', D201050, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (20009, 'ECONOMY', D201051, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (20010, 'ECONOMY', D201060, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+
+insert into reservations values (20011, 'ECONOMY', D101061, '01-FEB-2020', '09:00','05-FEB-2020', '16:00');
+
+
+
+insert into reservations values (30000, 'COMPACT', D101010, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (30001, 'COMPACT', D101011, '02-JUN-2019', '10:00','06-JUN-2019', '12:00');
+insert into reservations values (30002, 'COMPACT', D101020, '04-JUN-2019', '06:00','09-JUN-2019', '18:00');
+insert into reservations values (30003, 'COMPACT', D101021, '02-JUL-2019', '08:00','09-JUL-2019', '19:00');
+insert into reservations values (30004, 'COMPACT', D101030, '01-AUG-2019', '01:00','07-JUN-2019', '23:00');
+insert into reservations values (30005, 'COMPACT', D101031, '20-DEC-2019', '05:00','25-DEC-2019', '05:00');
+insert into reservations values (30006, 'COMPACT', D101040, '21-OCT-2019', '03:00','29-DEC-2019', '19:00');
+insert into reservations values (30007, 'COMPACT', D101041, '01-SEP-2019', '09:00','19-SEP-2019', '09:00');
+insert into reservations values (30008, 'COMPACT', D101050, '01-JAN-2020', '10:00','05-JAN-2020', '10:00');
+insert into reservations values (30009, 'COMPACT', D101051, '09-JAN-2020', '11:00','20-JAN-2020', '13:00');
+insert into reservations values (30010, 'COMPACT', D101060, '01-JUN-2020', '04:00','05-JUN-2020', '14:00');
+
+insert into reservations values (30011, 'COMPACT', D101061, '01-SEP-2021', '08:00','02-SEP-2021', '11:00');
+
+insert into reservations values (40000, 'MID', D101010, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (40001, 'MID', D101011, '02-JUN-2019', '10:00','06-JUN-2019', '12:00');
+insert into reservations values (40002, 'MID', D101020, '04-JUN-2019', '06:00','09-JUN-2019', '18:00');
+insert into reservations values (40003, 'MID', D101021, '02-JUL-2019', '08:00','09-JUL-2019', '19:00');
+insert into reservations values (40004, 'MID', D101030, '01-AUG-2019', '01:00','07-JUN-2019', '23:00');
+insert into reservations values (40005, 'MID', D101031, '20-DEC-2019', '05:00','25-DEC-2019', '05:00');
+insert into reservations values (40006, 'MID', D101040, '21-OCT-2019', '03:00','29-DEC-2019', '19:00');
+insert into reservations values (40007, 'MID', D101041, '01-SEP-2019', '09:00','19-SEP-2019', '09:00');
+insert into reservations values (40008, 'MID', D101050, '01-JAN-2020', '10:00','05-JAN-2020', '10:00');
+insert into reservations values (40009, 'MID', D101051, '09-JAN-2020', '11:00','20-JAN-2020', '13:00');
+insert into reservations values (40010, 'MID', D101060, '01-JUN-2020', '04:00','05-JUN-2020', '14:00');
+
+insert into reservations values (40011, 'MID', D101061, '01-SEP-2021', '08:00','02-SEP-2021', '11:00');
+
+insert into reservations values (50000, 'STANDARD', D101010, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (50001, 'STANDARD', D101011, '02-JUN-2019', '10:00','06-JUN-2019', '12:00');
+insert into reservations values (50002, 'STANDARD', D101020, '04-JUN-2019', '06:00','09-JUN-2019', '18:00');
+insert into reservations values (50003, 'STANDARD', D101021, '02-JUL-2019', '08:00','09-JUL-2019', '19:00');
+insert into reservations values (50004, 'STANDARD', D101030, '01-AUG-2019', '01:00','07-JUN-2019', '23:00');
+insert into reservations values (50005, 'STANDARD', D101031, '20-DEC-2019', '05:00','25-DEC-2019', '05:00');
+insert into reservations values (50006, 'STANDARD', D101040, '21-OCT-2019', '03:00','29-DEC-2019', '19:00');
+insert into reservations values (50007, 'STANDARD', D101041, '01-SEP-2019', '09:00','19-SEP-2019', '09:00');
+insert into reservations values (50008, 'STANDARD', D101050, '01-JAN-2020', '10:00','05-JAN-2020', '10:00');
+insert into reservations values (50009, 'STANDARD', D101051, '09-JAN-2020', '11:00','20-JAN-2020', '13:00');
+insert into reservations values (50010, 'STANDARD', D101060, '01-JUN-2020', '04:00','05-JUN-2020', '14:00');
+
+insert into reservations values (50011, 'STANDARD', D101061, '01-SEP-2021', '08:00','02-SEP-2021', '11:00');
+
+
+insert into reservations values (60000, 'FULL', D101010, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (60001, 'FULL', D101011, '02-JUN-2019', '10:00','06-JUN-2019', '12:00');
+insert into reservations values (60002, 'FULL', D101020, '04-JUN-2019', '06:00','09-JUN-2019', '18:00');
+insert into reservations values (60003, 'FULL', D101021, '02-JUL-2019', '08:00','09-JUL-2019', '19:00');
+insert into reservations values (60004, 'FULL', D101030, '01-AUG-2019', '01:00','07-JUN-2019', '23:00');
+insert into reservations values (60005, 'FULL', D101031, '20-DEC-2019', '05:00','25-DEC-2019', '05:00');
+insert into reservations values (60006, 'FULL', D101040, '21-OCT-2019', '03:00','29-DEC-2019', '19:00');
+insert into reservations values (60007, 'FULL', D101041, '01-SEP-2019', '09:00','19-SEP-2019', '09:00');
+insert into reservations values (60008, 'FULL', D101050, '01-JAN-2020', '10:00','05-JAN-2020', '10:00');
+insert into reservations values (60009, 'FULL', D101051, '09-JAN-2020', '11:00','20-JAN-2020', '13:00');
+insert into reservations values (60010, 'FULL', D101060, '01-JUN-2020', '04:00','05-JUN-2020', '14:00');
+
+insert into reservations values (60011, 'FULL', D101061, '01-SEP-2021', '08:00','02-SEP-2021', '11:00');
+
+
+insert into reservations values (70000, 'TRUCK', D101010, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
+insert into reservations values (70001, 'TRUCK', D101011, '02-JUN-2019', '10:00','06-JUN-2019', '12:00');
+insert into reservations values (70002, 'TRUCK', D101020, '04-JUN-2019', '06:00','09-JUN-2019', '18:00');
+insert into reservations values (70003, 'TRUCK', D101021, '02-JUL-2019', '08:00','09-JUL-2019', '19:00');
+insert into reservations values (70004, 'TRUCK', D101030, '01-AUG-2019', '01:00','07-JUN-2019', '23:00');
+insert into reservations values (70005, 'TRUCK', D101031, '20-DEC-2019', '05:00','25-DEC-2019', '05:00');
+insert into reservations values (70006, 'TRUCK', D101040, '21-OCT-2019', '03:00','29-DEC-2019', '19:00');
+insert into reservations values (70007, 'TRUCK', D101041, '01-SEP-2019', '09:00','19-SEP-2019', '09:00');
+insert into reservations values (70008, 'TRUCK', D101050, '01-JAN-2020', '10:00','05-JAN-2020', '10:00');
+insert into reservations values (70009, 'TRUCK', D101051, '09-JAN-2020', '11:00','20-JAN-2020', '13:00');
+insert into reservations values (70010, 'TRUCK', D101060, '01-JUN-2020', '04:00','05-JUN-2020', '14:00');
+
+insert into reservations values (70011, 'TRUCK', D101061, '01-SEP-2021', '08:00','02-SEP-2021', '11:00');
+
+
+insert into driver values (222222222, 'Candace Walters', '222 E. 22 St.', 'Burnaby', TO_DATE('02-FEB-1996', 'DD-MON-YYYY'), 5552222);
+insert into driver values (333333333, 'Kara Rops', '333 W. 33 Ave.', 'Richmond', TO_DATE('03-MAR-1990', 'DD-MON-YYYY'), 5553333);
+insert into driver values (444444444, 'Alex Mark', '444 E. 4 Ave.', 'Vancouver', TO_DATE('04-APR-1994', 'DD-MON-YYYY'), 5554444);
+
+insert into exam values (111111111, 2, TO_DATE('02-DEC-2007', 'DD-MON-YYYY'), 'L', 97);
+insert into exam values (222222222, 3, TO_DATE('09-MAY-2006', 'DD-MON-YYYY'), 'L', 25);
+insert into exam values (222222222, 4, TO_DATE('10-JUN-2006', 'DD-MON-YYYY'), 'L', 51);
+insert into exam values (111111111, 2, TO_DATE('25-MAY-2007', 'DD-MON-YYYY'), 'D', 79);
+insert into exam values (333333333, 2, TO_DATE('27-JUN-2007', 'DD-MON-YYYY'), 'L', 49);
+insert into exam values (222222222, 4, TO_DATE('29-AUG-2006', 'DD-MON-YYYY'), 'D', 81);
+insert into exam values (333333333, 1, TO_DATE('07-JUL-2007', 'DD-MON-YYYY'), 'L', 45);
+insert into exam values (444444444, 1, TO_DATE('27-JUL-2007', 'DD-MON-YYYY'), 'L', 71);
+insert into exam values (444444444, 2, TO_DATE('30-AUG-2007', 'DD-MON-YYYY'), 'D', 65);
+insert into exam values (333333333, 2, TO_DATE('27-JUL-2007', 'DD-MON-YYYY'), 'L', 61);
+
+insert into license(driver_sin, license_type, license_class, license_expiry, issue_date, branch_id) values (111111111, 'D', 5, TO_DATE('25-MAY-2009', 'DD-MON-YYYY'), TO_DATE('25-MAY-2007', 'DD-MON-YYYY'), 2);
+insert into license(driver_sin, license_type, license_class, license_expiry, issue_date, branch_id) values (222222222, 'D', 5, TO_DATE('29-AUG-2008', 'DD-MON-YYYY'), TO_DATE('29-AUG-2006', 'DD-MON-YYYY'), 4);
+insert into license(driver_sin, license_type, license_class, license_expiry, issue_date, branch_id) values (333333333, 'L', 7, TO_DATE('27-DEC-2007', 'DD-MON-YYYY'), TO_DATE('27-JUN-2007', 'DD-MON-YYYY'), 2);
+insert into license(driver_sin, license_type, license_class, license_expiry, issue_date, branch_id) values (444444444, 'D', 5, TO_DATE('30-AUG-2009', 'DD-MON-YYYY'), TO_DATE('30-AUG-2007', 'DD-MON-YYYY'), 2);
+
+commit work;
