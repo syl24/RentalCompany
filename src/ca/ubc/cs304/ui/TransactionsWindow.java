@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import ca.ubc.cs304.controller.Bank;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 
 /**
