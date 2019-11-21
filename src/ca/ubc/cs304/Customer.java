@@ -80,10 +80,14 @@ public class Customer {
                 String vehicleLicense = rs.getString(2);
                 String vehicleMake = rs.getString(3);
                 String vehicleModel = rs.getString(4);
-                String vehicleYear = rs.getString(5);
+                Integer vehicleYear = rs.getInt(5);
                 String vehicleColor = rs.getString(6);
-                String vehicleOdo = rs.getString(7);
+                Integer vehicleOdo = rs.getInt(7);
                 String vehicleLoc = rs.getString(10);
+
+                System.out.println("Vehicle ID: " + vehicleID + ", Make: " + vehicleMake + ", Model: " + vehicleModel +
+                        ", Year: " + vehicleYear + ", Colour: " + vehicleColor + ", Odometer: " + vehicleOdo +
+                        ", Branch Location: " + vehicleLoc + "\n");
 
             }
 
