@@ -39,7 +39,7 @@ insert into reservations values (20010, 'ECONOMY', D201060, '01-JUN-2019', '09:0
 
 insert into reservations values (20011, 'ECONOMY', D101061, '01-FEB-2020', '09:00','05-FEB-2020', '16:00');
 
-/////
+
 
 insert into reservations values (30000, 'COMPACT', D101010, '01-JUN-2019', '09:00','05-JUN-2019', '09:00');
 insert into reservations values (30001, 'COMPACT', D101011, '02-JUN-2019', '10:00','06-JUN-2019', '12:00');
