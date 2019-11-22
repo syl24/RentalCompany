@@ -1,44 +1,48 @@
 package ca.ubc.cs304;
 
-public class VehicleType {
+public abstract class VehicleType {
+    private String typeName;
+    private int WRate;
+    private int DRate;
+    private int HRate;
+    private int WiRate;
+    private int DiRate;
+    private int KRate;
     //
 
     public VehicleType() {
+        typeName = this.typeName;
+        WRate = this.WRate;
+        DRate = this.DRate;
+        HRate = this.HRate;
+        WiRate = this.WiRate;
+        DiRate = this.DiRate;
+        KRate = this.KRate;
 
     }
 //    java.sql.Connection con = Connection.getInstance().getConnection();
-    public int getWRate(String type) {
-        return 0;
-        //todo
+    public int getWRate() {
+        return WRate;
     }
 
-    public int getDRate(String type) {
-        return 0;
-        //todo
+    public int getDRate() {
+        return DRate;
     }
 
-    public int getHRate(String type) {
-        return 0;
-        //todo
+    public int getHRate() {
+        return HRate;
     }
 
-    public int getHiRate(String type) {
-        return 0;
-        //todo
+    public int getWiRate() {
+        return WiRate;
     }
 
-    public int getWiRate(String type) {
-        return 0;
-        //todo
+    public int getDiRate() {
+        return DiRate;
     }
 
-    public int getDiRate(String type) {
-        return 0;
-        //todo
+    public int getKRate() {
+        return KRate;
     }
 
-    public int getKRate(String type) {
-        return 0;
-        //todo
-    }
 }
