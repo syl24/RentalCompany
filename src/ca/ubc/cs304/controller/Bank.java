@@ -11,7 +11,8 @@ import ca.ubc.cs304.ui.TransactionsWindow;
 /**
  * This is the main controller class that will orchestrate everything.
  */
-public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
+public class
+Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	private DatabaseConnectionHandler dbHandler = null;
 	private LoginWindow loginWindow = null;
 

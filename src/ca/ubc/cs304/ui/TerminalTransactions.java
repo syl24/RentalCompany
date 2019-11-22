@@ -24,21 +24,57 @@ public class TerminalTransactions {
 
 	/**
 	 * Displays simple text interface
-	 */ 
-	public void showMainMenu(TerminalTransactionsDelegate delegate) {
+	 */
+
+	public void showUserSelect(TerminalTransactionsDelegate delegate){
 		this.delegate = delegate;
-		
-	    bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
-		
-		while (choice != 5) {
+
+		while (choice != 3) {
 			System.out.println();
-			System.out.println("1. Insert branch");
-			System.out.println("2. Delete branch");
-			System.out.println("3. Update branch name");
-			System.out.println("4. Show branch");
-			System.out.println("5. Quit");
-			System.out.print("Please choose one of the above 5 options: ");
+			System.out.println("1. Customer");
+			System.out.println("2. Clerk");
+			System.out.println("3. Quit");
+			System.out.print("Please tell us who you are [Enter Number]: ");
+
+			choice = readInteger(false);
+
+			System.out.println(" ");
+
+			if (choice != INVALID_INPUT) {
+				switch (choice) {
+					case 1:
+						customerMenu(delegate);
+						break;
+					case 2:
+						clerkMenu(delegate);
+						break;
+					case 3:
+						handleQuitOption();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+
+	public void customerMenu(TerminalTransactionsDelegate delegate) {
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice = INVALID_INPUT;
+
+		while (choice != 4) {
+			System.out.println();
+			System.out.println("1. View the number of available vehicles");
+			System.out.println("2. Make a reservation");
+			System.out.println("3. Go back to previous menu");
+			System.out.println("4. Quit");
+			System.out.print("Hello Customer! What would you like to do? [Enter Number]: ");
 
 			choice = readInteger(false);
 
@@ -68,6 +104,51 @@ public class TerminalTransactions {
 			}
 		}		
 	}
+
+
+	public void clerkMenu(TerminalTransactionsDelegate delegate) {
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice = INVALID_INPUT;
+
+		while (choice != 5) {
+			System.out.println();
+			System.out.println("1. Insert branch");
+			System.out.println("2. Delete branch");
+			System.out.println("3. Update branch name");
+			System.out.println("4. Show branch");
+			System.out.println("5. Quit");
+			System.out.print("Hello Customer! What would you like to do? [Enter Number]: ");
+
+			choice = readInteger(false);
+
+			System.out.println(" ");
+
+			if (choice != INVALID_INPUT) {
+				switch (choice) {
+					case 1:
+						handleInsertOption();
+						break;
+					case 2:
+						handleDeleteOption();
+						break;
+					case 3:
+						handleUpdateOption();
+						break;
+					case 4:
+						delegate.showBranch();
+						break;
+					case 5:
+						handleQuitOption();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
 	
 	private void handleDeleteOption() {
 		int branchId = INVALID_INPUT;
