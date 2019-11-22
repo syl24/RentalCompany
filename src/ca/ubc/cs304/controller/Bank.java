@@ -24,8 +24,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 		loginWindow = new LoginWindow();
 		loginWindow.showFrame(this);
 
-		transwindow = new TransactionsWindow();
-		transwindow.showFrame(this);
+
 	}
 
 	/**
@@ -40,12 +39,12 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 			// Once connected, remove login window and start text transaction flow
 			loginWindow.dispose();
 
-			// TransactionsWindow tWindow = new TransactionsWindow();
-			// tWindow.showFrame();
 
 
 			TerminalTransactions transaction = new TerminalTransactions();
 			transaction.showMainMenu(this);
+//			transwindow = new TransactionsWindow();
+//			transwindow.showFrame(this);
 		} else {
 			loginWindow.handleLoginFailed();
 

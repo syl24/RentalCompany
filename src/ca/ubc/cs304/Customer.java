@@ -73,7 +73,8 @@ public class Customer {
                     "SELECT * FROM vehicles" +
                             "WHERE (vehicles_status LIKE 'AVAILABLE')" +
                             "OR (vehicletypes_name LIKE '% " + key + " %')" +
-                            "OR (branch_location LIKE '% " + key + " %')");
+                            "OR (branch_location LIKE '% " + key + " %')" +
+                            "ORDER BY vehicletypes_name");
 
             while (rs.next()){
                 Integer vehicleID = rs.getInt(1);
@@ -85,7 +86,7 @@ public class Customer {
                 Integer vehicleOdo = rs.getInt(7);
                 String vehicleLoc = rs.getString(10);
 
-                System.out.println("Vehicle ID: " + vehicleID + ", Make: " + vehicleMake + ", Model: " + vehicleModel +
+                System.out.println("Vehicle ID: " + vehicleID + ", License: " + vehicleLicense + ", Make: " + vehicleMake + ", Model: " + vehicleModel +
                         ", Year: " + vehicleYear + ", Colour: " + vehicleColor + ", Odometer: " + vehicleOdo +
                         ", Branch Location: " + vehicleLoc + "\n");
 
