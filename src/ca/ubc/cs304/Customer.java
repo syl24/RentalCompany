@@ -61,6 +61,12 @@ public class Customer {
             }
         }
 
+        
+        //regex to split key into parts lol
+        String key1 = String.valueOf(key.split("\\s", 3)[1]);
+        String key2 = String.valueOf(key.split("\\s", 3)[2]);
+        String key3 = String.valueOf(key.split("\\s", 3)[3]);
+
 
         Statement stmt = null;
         ResultSet rs;
@@ -72,8 +78,8 @@ public class Customer {
             rs = stmt.executeQuery(
                     "SELECT * FROM vehicles" +
                             "WHERE (vehicles_status LIKE 'AVAILABLE')" +
-                            "OR (vehicletypes_name LIKE '% " + key + " %')" +
-                            "OR (branch_location LIKE '% " + key + " %')" +
+                            "AND ((vehicletypes_name LIKE '%" + key1 + "%')" +
+                            "OR (branch_location LIKE '%" + key2 + "%'))" +
                             "ORDER BY vehicletypes_name");
 
             while (rs.next()){
