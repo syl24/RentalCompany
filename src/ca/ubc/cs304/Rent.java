@@ -1,9 +1,5 @@
 package ca.ubc.cs304;
-
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import oracle.jdbc.proxy.annotation.Pre;
-
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +18,6 @@ public class Rent extends DatabaseConnectionHandler {
     private int estimate;
     private int cardNo;
     private Date expDate;
-    private int credCardExpYear;
     private int odometer;
     private String cardName;
     private int vid;
@@ -65,7 +60,7 @@ public class Rent extends DatabaseConnectionHandler {
             }
 
 
-            // add additional equipment (if needed) to rent model
+            // ADD ADDITIONAL EQUIPMENT IF NEEDED TO THIS RENT MODEL
 
 
         } catch (SQLException e) {
@@ -203,7 +198,7 @@ public class Rent extends DatabaseConnectionHandler {
         return vLicense;
     }
 
-    public void setConfNo() {
+    public void setConfNo(int confNo) {
         this.confNo = confNo;
     }
 
@@ -223,15 +218,63 @@ public class Rent extends DatabaseConnectionHandler {
         this.fromTime = fromTime;
     }
 
-
-
-
-
-
-
-
-
-
-
+    public Timestamp getFromTime() {
+        return fromTime;
     }
+
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
+    }
+
+    public Date getToDate() {
+        return toDate;
+    }
+
+    public void setToTime(Timestamp toTime) {
+        this.toTime = toTime;
+    }
+
+    public Timestamp getToTime() {
+        return toTime;
+    }
+
+    public void setOdometer(int odometer) {
+        this.odometer = odometer;
+    }
+
+    public int getOdometer() {
+        return odometer;
+    }
+
+    public void setCardNo(int cardNo) {
+        this.cardNo = cardNo;
+    }
+
+    public int getCardNo() {
+        return cardNo;
+    }
+
+    public void setExpDate(Date expDate) {
+        this.expDate = expDate;
+    }
+
+    public Date getExpDate() {
+        return expDate;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public String getCardName() {
+        return cardName;
+    }
+
+
+
+
+
+
+
+}
 
