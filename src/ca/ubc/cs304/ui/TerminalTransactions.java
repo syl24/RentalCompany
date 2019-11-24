@@ -327,6 +327,7 @@ public class TerminalTransactions {
 				switch (viewYN) {
 					case 1:
 						handleCustView(type, loc, time);
+						handleResoYN();
 						break;
 
 					case 2:
@@ -345,6 +346,39 @@ public class TerminalTransactions {
 		delegate.customerVehiclesView(type, loc, time);
 	}
 
+	private void handleResoYN(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int resoYN = INVALID_INPUT;
+
+		while (resoYN != 3) {
+			System.out.println("1. Yes");
+			System.out.println("2. No, return to menu");
+			System.out.print("Would you like to reserve one of these vehicles? ");
+
+			resoYN = readInteger(true);
+
+			System.out.println(" ");
+
+			if (resoYN != 7) {
+				switch (resoYN) {
+					case 1:
+						handleCustReso();//type, loc, time);
+						handleResoYN();
+						break;
+
+					case 2:
+						handleCustomer(); //returns to menu
+						break;
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+	/*If a customer is new, add the customer’s details to the database.*/
 	private void handleCustReso(){
 		String rkey = null;
 		while (rkey == null || rkey.length() <= 0);
