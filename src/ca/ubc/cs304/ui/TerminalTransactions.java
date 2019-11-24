@@ -197,7 +197,13 @@ public class TerminalTransactions {
 
 
 
-	// Customer Transactions
+	/**
+	 *
+	 *
+	 * Customer Transactions
+	 *
+	 *
+	 * */
 
 	private void handleCustomer(){
 		//todo
@@ -393,6 +399,8 @@ public class TerminalTransactions {
 						// handleLogin();
 						// make reservation!
 						handleReso(handleLogin().getDLicense(), type, fromDate, fromTime, toDate, toTime);
+						handleResoConf(type, fromTime, toTime);
+
 						break;
 
 					case 2:
@@ -445,12 +453,86 @@ public class TerminalTransactions {
 		delegate.makeNewReservation(dLicense, typeName, fromDate, fromTime, toDate, toTime);
 	}
 
+	private void handleResoConf(String type, Timestamp fromTime, Timestamp toTime){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int confYN = INVALID_INPUT;
+
+		while (confYN != 3) {
+			System.out.println(" ");
+			System.out.println("1. Yes");
+			System.out.println("2. No, return to menu");
+			System.out.print("Confirm reservation? ");
+
+			confYN = readInteger(true);
+
+			System.out.println(" ");
+
+			if (confYN != 7) {
+				switch (confYN) {
+					case 1:
+						delegate.confirmReso();
+						System.out.println("Your reservation details: ");
+						System.out.println("Vehicle Type: " + type);
+						System.out.println("Start Date: " + fromTime);
+						System.out.println("End Date: " + toTime);
+						handleReturntoMenu();
+						break;
+
+					case 2:
+						handleCustomer();
+						break;
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+	private void handleReturntoMenu(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int retMM = INVALID_INPUT;
+
+		while (retMM != 2) {
+			System.out.println("1. Yes");
+			System.out.println("2. No, logout and exit");
+			System.out.print("Return to main menu? ");
+
+			retMM = readInteger(true);
+
+			System.out.println(" ");
+
+			if (retMM != 7) {
+				switch (retMM) {
+					case 1:
+						handleCustomer();
+						break;
+
+					case 2:
+						handleQuitOption();
+						break;
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
 
 
 
 
 
-	// Clerk Transactions
+
+	/**
+	 *
+	 *
+	 * Clerk Transactions
+	 *
+	 *
+	 * */
 
 	private void handleClerk(){
 		//todo
