@@ -11,8 +11,8 @@ public class Customer {
 
     public void viewVehiclesCount(String type, String loc, String time){
 
-        Connection con = null;
         //try to connect
+        Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
         } catch (SQLException e) {
@@ -38,6 +38,8 @@ public class Customer {
             while (rs.next()){
                 Integer count = rs.getInt("total");
                 System.out.println(count);
+                if (count == 0)
+                    System.out.println("Sorry! There are no vehicles that match your search.");
             }
 
         } catch (SQLException ex) {
@@ -49,8 +51,8 @@ public class Customer {
 
     public void viewVehicles(String type, String loc, String time){
 
-        Connection con = null;
         //try to connect
+        Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
         } catch (SQLException e) {
@@ -73,7 +75,6 @@ public class Customer {
             rs = stmt.executeQuery(
                     "SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%')");
 
-
             while (rs.next()){
                 Integer vehicleID = rs.getInt(1);
                 String vehicleLicense = rs.getString(2);
@@ -87,7 +88,6 @@ public class Customer {
                 System.out.println("Vehicle ID: " + vehicleID + ", License: " + vehicleLicense + ", Make: " + vehicleMake + ", Model: " + vehicleModel +
                         ", Year: " + vehicleYear + ", Colour: " + vehicleColor + ", Odometer: " + vehicleOdo +
                         ", Branch Location: " + vehicleLoc + "\n");
-
             }
 
         } catch (SQLException ex) {
@@ -96,12 +96,15 @@ public class Customer {
     }
 
     /**customer provides the location, the type of the vehicle,
-     * and the day and time they would like to pick up and return the vehicle.*/
+     * and the day and time they would like to pick up and return the vehicle.
+     *
+     * To make a reservation, the customer provides her/his
+     * name and phone number, and the system prints a confirmation number*/
 
     public void makeReservation(String key){
 
-//        Connection con = null;
 //        //try to connect
+//        Connection con = null;
 //        try {
 //            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
 //        } catch (SQLException e) {
