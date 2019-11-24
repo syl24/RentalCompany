@@ -3,18 +3,25 @@ package ca.ubc.cs304;
 import java.sql.*;
 
 public class Customer {
+    private String name;
+    private Integer phone_number;
+    private String address;
+    private String dlicense;
 
-    public void Customer(){
-        //
+    public void Customer(String name, Integer phone_number, String address, String dlicense){
+        this.name = name;
+        this.phone_number = phone_number;
+        this.address = address;
+        this.dlicense = dlicense;
     }
 
 
     public void viewVehiclesCount(String type, String loc, String time){
 
-        //try to connect
         Connection con = null;
+        //try to connect
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
         } catch (SQLException e) {
             e.printStackTrace();
             try {
@@ -38,8 +45,6 @@ public class Customer {
             while (rs.next()){
                 Integer count = rs.getInt("total");
                 System.out.println(count);
-                if (count == 0)
-                    System.out.println("Sorry! There are no vehicles that match your search.");
             }
 
         } catch (SQLException ex) {
@@ -51,10 +56,10 @@ public class Customer {
 
     public void viewVehicles(String type, String loc, String time){
 
-        //try to connect
         Connection con = null;
+        //try to connect
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
         } catch (SQLException e) {
             e.printStackTrace();
             try {
@@ -75,6 +80,7 @@ public class Customer {
             rs = stmt.executeQuery(
                     "SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%')");
 
+
             while (rs.next()){
                 Integer vehicleID = rs.getInt(1);
                 String vehicleLicense = rs.getString(2);
@@ -88,6 +94,7 @@ public class Customer {
                 System.out.println("Vehicle ID: " + vehicleID + ", License: " + vehicleLicense + ", Make: " + vehicleMake + ", Model: " + vehicleModel +
                         ", Year: " + vehicleYear + ", Colour: " + vehicleColor + ", Odometer: " + vehicleOdo +
                         ", Branch Location: " + vehicleLoc + "\n");
+
             }
 
         } catch (SQLException ex) {
@@ -103,8 +110,8 @@ public class Customer {
 
     public void makeReservation(String key){
 
-//        //try to connect
 //        Connection con = null;
+//        //try to connect
 //        try {
 //            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
 //        } catch (SQLException e) {
@@ -130,4 +137,3 @@ public class Customer {
     }
 
 }
-

@@ -17,7 +17,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
     private TransactionsWindow transwindow = null;
-	private Customer customer = new Customer();
+    private Customer customer = new Customer();
 
     public Bank() {
         dbHandler = new DatabaseConnectionHandler();
@@ -124,7 +124,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
      */
 
     public void customerVehiclesCount(String type, String loc, String time){
-		customer.viewVehiclesCount(type, loc, time);
+        customer.viewVehiclesCount(type, loc, time);
     }
 
     public void customerVehiclesView(String type, String loc, String time){
@@ -132,7 +132,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     }
 
     public void customerMakeReservation(String key) {
-		customer.makeReservation(key);
+        customer.makeReservation(key);
 
     }
 

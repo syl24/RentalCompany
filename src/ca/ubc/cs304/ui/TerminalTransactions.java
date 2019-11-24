@@ -16,7 +16,7 @@ public class TerminalTransactions {
 	private static final int INVALID_INPUT = Integer.MIN_VALUE;
 	private static final int EMPTY_INPUT = 0;
 	private static final String EMPTY_STRING = "";
-	
+
 	private BufferedReader bufferedReader = null;
 	private TerminalTransactionsDelegate delegate = null;
 
@@ -25,13 +25,13 @@ public class TerminalTransactions {
 
 	/**
 	 * Displays simple text interface
-	 */ 
+	 */
 	public void showMainMenu(TerminalTransactionsDelegate delegate) {
 		this.delegate = delegate;
-		
-	    bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
-		
+
 		while (choice != 5) {
 			System.out.println();
 			System.out.println("1. Insert branch");
@@ -49,35 +49,35 @@ public class TerminalTransactions {
 
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
-				case 1:  
-					handleInsertOption(); 
-					break;
-				case 2:  
-					handleDeleteOption(); 
-					break;
-				case 3: 
-					handleUpdateOption();
-					break;
-				case 4:  
-					delegate.showBranch(); 
-					break;
-				case 5:
-					handleQuitOption();
-					break;
-				case 6:
-					handleCustomer();
-					break;
-				case 7:
-					handleClerk();
-					break;
-				default:
-					System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
-					break;
+					case 1:
+						handleInsertOption();
+						break;
+					case 2:
+						handleDeleteOption();
+						break;
+					case 3:
+						handleUpdateOption();
+						break;
+					case 4:
+						delegate.showBranch();
+						break;
+					case 5:
+						handleQuitOption();
+						break;
+					case 6:
+						handleCustomer();
+						break;
+					case 7:
+						handleClerk();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
 				}
 			}
-		}		
+		}
 	}
-	
+
 	private void handleDeleteOption() {
 		int branchId = INVALID_INPUT;
 		while (branchId == INVALID_INPUT) {
@@ -88,50 +88,50 @@ public class TerminalTransactions {
 			}
 		}
 	}
-	
+
 	private void handleInsertOption() {
 		int id = INVALID_INPUT;
 		while (id == INVALID_INPUT) {
 			System.out.print("Please enter the branch ID you wish to insert: ");
 			id = readInteger(false);
 		}
-		
+
 		String name = null;
 		while (name == null || name.length() <= 0) {
 			System.out.print("Please enter the branch name you wish to insert: ");
 			name = readLine().trim();
 		}
-		
+
 		// branch address is allowed to be null so we don't need to repeatedly ask for the address
 		System.out.print("Please enter the branch address you wish to insert: ");
 		String address = readLine().trim();
 		if (address.length() == 0) {
 			address = null;
 		}
-		
+
 		String city = null;
 		while (city == null || city.length() <= 0) {
 			System.out.print("Please enter the branch city you wish to insert: ");
 			city = readLine().trim();
 		}
-		
+
 		int phoneNumber = INVALID_INPUT;
 		while (phoneNumber == INVALID_INPUT) {
 			System.out.print("Please enter the branch phone number you wish to insert: ");
 			phoneNumber = readInteger(true);
 		}
-		
+
 		BranchModel model = new BranchModel(address,
-											city,
-											id,
-											name,
-											phoneNumber);
+				city,
+				id,
+				name,
+				phoneNumber);
 		delegate.insertBranch(model);
 	}
-	
+
 	private void handleQuitOption() {
 		System.out.println("Good Bye!");
-		
+
 		if (bufferedReader != null) {
 			try {
 				bufferedReader.close();
@@ -139,17 +139,17 @@ public class TerminalTransactions {
 				System.out.println("IOException!");
 			}
 		}
-		
+
 		delegate.terminalTransactionsFinished();
 	}
-	
+
 	private void handleUpdateOption() {
 		int id = INVALID_INPUT;
 		while (id == INVALID_INPUT) {
 			System.out.print("Please enter the branch ID you wish to update: ");
 			id = readInteger(false);
 		}
-		
+
 		String name = null;
 		while (name == null || name.length() <= 0) {
 			System.out.print("Please enter the branch name you wish to update: ");
@@ -158,7 +158,7 @@ public class TerminalTransactions {
 
 		delegate.updateBranch(id, name);
 	}
-	
+
 	private int readInteger(boolean allowEmpty) {
 		String line = null;
 		int input = INVALID_INPUT;
@@ -176,7 +176,7 @@ public class TerminalTransactions {
 		}
 		return input;
 	}
-	
+
 	private String readLine() {
 		String result = null;
 		try {
@@ -255,7 +255,7 @@ public class TerminalTransactions {
 
 			choice_type = readInteger(true);
 
-            System.out.println(" ");
+			System.out.println(" ");
 
 			if (choice_type != 7) {
 				switch (choice_type) {
@@ -303,6 +303,7 @@ public class TerminalTransactions {
 			time = readLine().trim();
 		}
 
+		System.out.println(" ");
 
 		delegate.customerVehiclesCount(type, loc, time);
 
@@ -321,7 +322,7 @@ public class TerminalTransactions {
 
 			viewYN = readInteger(true);
 
-            System.out.println(" ");
+			System.out.println(" ");
 
 			if (viewYN != 7) {
 				switch (viewYN) {
@@ -347,6 +348,7 @@ public class TerminalTransactions {
 	}
 
 	private void handleResoYN(){
+		//stub
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int resoYN = INVALID_INPUT;
 
@@ -363,7 +365,7 @@ public class TerminalTransactions {
 				switch (resoYN) {
 					case 1:
 						handleCustReso();//type, loc, time);
-						handleResoYN();
+						//handleResoYN();
 						break;
 
 					case 2:
@@ -378,12 +380,7 @@ public class TerminalTransactions {
 		}
 	}
 
-	/*If a customer is new, add the customer’s details to the database.*/
 	private void handleCustReso(){
-		String rkey = null;
-		while (rkey == null || rkey.length() <= 0);
-		System.out.print("Please enter a vehicle type, location, and/or time: ");
-		rkey = readLine().trim();
-		delegate.customerMakeReservation(rkey);
+		//todo
 	}
 }
