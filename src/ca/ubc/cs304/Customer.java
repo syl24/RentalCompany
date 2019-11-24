@@ -45,6 +45,8 @@ public class Customer {
             while (rs.next()){
                 Integer count = rs.getInt("total");
                 System.out.println(count);
+                if (count == 0)
+                    System.out.println("Sorry! There are no vehicles that match your search.");
             }
 
         } catch (SQLException ex) {

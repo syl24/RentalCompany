@@ -193,9 +193,8 @@ public class TerminalTransactions {
 
 
 
-	private void handleClerk(){
-		//todo
-	}
+
+	// Customer Transactions
 
 	private void handleCustomer(){
 		//todo
@@ -382,5 +381,34 @@ public class TerminalTransactions {
 
 	private void handleCustReso(){
 		//todo
+	}
+
+
+
+
+
+
+	// Clerk Transactions
+
+	private void handleClerk(){
+		//todo
+
+		/**1. Rent a vehicle
+		* 	a. Is there a reservation? Y/N
+		 * 		Yes: complete rental transaction, return receipt (rentID)
+		 * 		No:	reuse custSearch, View, Reso?, then return receipt (rentID)
+		 *
+		 * 2. Return a vehicle
+		 * 	a. Enter rentID
+		 * 	b. Receipt: Display resoConfNum, date of return, calculation of total cost,
+		 *
+		 * 3. Generate Reports
+		 * 	a. All Daily Rentals
+		 * 	b. Daily Rentals (Branch)
+		 * 		- enter branch name
+		 * 	c. All Daily Returns
+		 * 	d. Daily Returns (Branch)
+		 * 		- enter branch name */
+
 	}
 }
