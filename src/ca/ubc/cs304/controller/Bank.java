@@ -133,7 +133,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     }
 
     public void makeNewReservation(String key) {
-        
+
 
     }
 
