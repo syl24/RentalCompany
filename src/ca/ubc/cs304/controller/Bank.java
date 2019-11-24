@@ -127,7 +127,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
      * - make a reservation
      */
 
-    public Integer customerVehiclesCount(String type, String loc, String time){
+    public Integer customerVehiclesCount(String type, String loc){
         Connection con = null;
         //try to connect
         try {
@@ -178,7 +178,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         return 0;
     }
 
-    public void customerVehiclesView(String type, String loc, String time){
+    public void customerVehiclesView(String type, String loc){
         Connection con = null;
         //try to connect
         try {
@@ -237,12 +237,13 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     }
 
 
-    public void customerLogin(String phone_number, String  name, String address){
-        customer = new Customer(phone_number, name, address);
+    public Customer customerLogin(String phone_number, String  name, String address, String dlicense){
+        customer = new Customer(phone_number, name, address, dlicense);
+        return customer;
     }
 
-    public void makeNewReservation(String key) {
-
+    public void makeNewReservation(String dlicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime) {
+        reso = new Reservation(dlicense, typeName, fromDate, fromTime, toDate, toTime);
     }
 
 

@@ -1,11 +1,14 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.Customer;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.model.BranchModel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * The class is only responsible for handling terminal text inputs. 
@@ -238,7 +241,10 @@ public class TerminalTransactions {
 	private void handleCustSearch(){
 		String type = null;
 		String loc = null;
-		String time = null;
+		Date fromDate = null;
+		Timestamp fromTime = null;
+		Date toDate = null;
+		Timestamp toTime = null;
 
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice_type = INVALID_INPUT;
@@ -299,20 +305,37 @@ public class TerminalTransactions {
 		}
 		System.out.println(" ");
 
-		while (time == null || time.length() <= 0) {
-			System.out.print("Please enter a time: ");
-			time = readLine().trim();
+		while (fromDate == null) {
+			System.out.print("Please enter a Start Date: ");
+			fromDate = Date.valueOf(readLine().trim());
 		}
-
 		System.out.println(" ");
 
-		if (delegate.customerVehiclesCount(type, loc, time) == 0) // result count == 0
+		while (fromTime == null) {
+			System.out.print("Please enter a Start time: ");
+			fromTime = Timestamp.valueOf(readLine().trim());
+		}
+		System.out.println(" ");
+
+		while (toDate == null) {
+			System.out.print("Please enter an End Date: ");
+			toDate = Date.valueOf(readLine().trim());
+		}
+		System.out.println(" ");
+
+		while (toTime == null) {
+			System.out.print("Please enter an End Time: ");
+			toTime = Timestamp.valueOf(readLine().trim());
+		}
+		System.out.println(" ");
+
+		if (delegate.customerVehiclesCount(type, loc) == 0) // result count == 0
 			handleCustomer();
 		else
-			handleViewYN(type, loc, time);
+			handleViewYN(type, loc, fromDate, fromTime, toDate, toTime);
 	}
 
-	private void handleViewYN(String type, String loc, String time) {
+	private void handleViewYN(String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime) {
 
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int viewYN = INVALID_INPUT;
@@ -329,8 +352,8 @@ public class TerminalTransactions {
 			if (viewYN != 7) {
 				switch (viewYN) {
 					case 1:
-						handleCustView(type, loc, time);
-						handleResoYN(type, loc, time);
+						handleCustView(type, loc, fromDate, fromTime, toDate, toTime);
+						handleResoYN(type, loc, fromDate, fromTime, toDate, toTime);
 						break;
 
 					case 2:
@@ -345,11 +368,11 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleCustView(String type, String loc, String time){
-		delegate.customerVehiclesView(type, loc, time);
+	private void handleCustView(String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
+		delegate.customerVehiclesView(type, loc);
 	}
 
-	private void handleResoYN(String type, String loc, String time){
+	private void handleResoYN(String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int resoYN = INVALID_INPUT;
 
@@ -367,9 +390,9 @@ public class TerminalTransactions {
 					case 1:
 						System.out.println("Processing...");
 						System.out.println(" ");
-						handleLogin(type, loc, time);
+						// handleLogin();
 						// make reservation!
-						handleReso();
+						handleReso(handleLogin().getDLicense(), type, fromDate, fromTime, toDate, toTime);
 						break;
 
 					case 2:
@@ -384,48 +407,14 @@ public class TerminalTransactions {
 		}
 	}
 
-/*	private void handleLoginYN(String type, String loc, String time){
-		//Customer account check y/n
-		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-		int accYN = INVALID_INPUT;
 
-		while (accYN != 3) {
-			System.out.println("1. Yes, log in");
-			System.out.println("2. No, sign me up!");
-			System.out.println("3. Return to menu");
-			System.out.print("Do you have an existing account? ");
-
-			accYN = readInteger(false);
-
-			System.out.println(" ");
-
-			if (accYN != 7) {
-				switch (accYN) {
-					case 1:
-						handleLogin(type, loc, time); //go to login menu
-						break;
-
-					case 2:
-						handleSignup(type, loc, time); //go to sign-up menu
-						break;
-
-					case 3:
-						handleCustomer(); //return to main menu
-
-					default:
-						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
-						break;
-				}
-			}
-		}
-	}*/
-
-	private void handleLogin(String type, String loc, String time){
+	private Customer handleLogin(){
 		//please enter your phone number
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		String phone = null;
 		String name = null;
 		String address = null;
+		String dlicense = null;
 
 
 		while (phone == null || phone.length() <= 0){
@@ -440,15 +429,20 @@ public class TerminalTransactions {
 		}
 		while (address == null || address.length() <= 0){
 			System.out.println();
-			System.out.println("Please enter address:");
+			System.out.println("Please enter your address:");
 			address = readLine().trim();
 		}
+		while (dlicense == null || dlicense.length() <= 0){
+			System.out.println();
+			System.out.println("Please enter your driver's license number:");
+			dlicense = readLine().trim();
+		}
 
-		delegate.customerLogin(phone, name, address);
+		return delegate.customerLogin(phone, name, address, dlicense);
 	}
 
-	private void handleReso(){
-		//
+	private void handleReso(String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
+		delegate.makeNewReservation(dLicense, typeName, fromDate, fromTime, toDate, toTime);
 	}
 
 

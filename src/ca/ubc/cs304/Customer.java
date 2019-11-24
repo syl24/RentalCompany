@@ -46,12 +46,12 @@ public class Customer {
 
 
     // creating a new customer or finding one w/ same phone #
-    public Customer(String phone_number, String  name, String address) {
+    public Customer(String phone_number, String  name, String address, String dlicense) {
         try {
             ResultSet customerExist = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159").createStatement().executeQuery("SELECT " +
                     "* FROM customers WHERE customers_cellphone = " + phone_number); {
                 int count = 0;
-                String dlicense = null;
+                //String dlicense = null;
 
                 // storing the dlicense # of existing customer
                 while(customerExist.next()) {
@@ -109,6 +109,9 @@ public class Customer {
 
 
 
+    public String getDLicense() {
+        return this.dlicense;
+    }
 
 
     // commented the below constructor out so mine could func
