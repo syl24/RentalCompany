@@ -112,7 +112,8 @@ public class Customer {
 //        this.dlicense = dlicense;
 //    }
 
-    public Integer viewVehiclesCount(String type, String loc, String time){
+    /** moved these functions into Bank.java */
+/*    public Integer viewVehiclesCount(String type, String loc, String time){
 
         Connection con = null;
         //try to connect
@@ -219,9 +220,9 @@ public class Customer {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    private void
+    //private void
 
     /**customer provides the location, the type of the vehicle,
      * and the day and time they would like to pick up and return the vehicle.

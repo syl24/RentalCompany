@@ -8,8 +8,7 @@ import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
 import ca.ubc.cs304.ui.TransactionsWindow;
 
-import ca.ubc.cs304.Customer;
-import ca.ubc.cs304.Reservation;
+import java.sql.*;
 
 /**
  * This is the main controller class that will orchestrate everything.
@@ -18,7 +17,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
     private TransactionsWindow transwindow = null;
-    private Customer customer = new Customer();
+    //private Customer customer = new Customer();
 
     public Bank() {
         dbHandler = new DatabaseConnectionHandler();
@@ -125,11 +124,109 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
      */
 
     public Integer customerVehiclesCount(String type, String loc, String time){
-        return customer.viewVehiclesCount(type, loc, time);
+        Connection con = null;
+        //try to connect
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+
+        Statement stmt = null;
+        ResultSet rs;
+
+        //query
+        try {
+            stmt = con.createStatement();
+
+            rs = stmt.executeQuery(
+                    "SELECT COUNT (*) AS total FROM (SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%'))");
+
+            while (rs.next()){
+                Integer count = rs.getInt("total");
+                System.out.println("Available vehicles: " + count);
+                System.out.println(" ");
+                if (count <= 0) {
+                    System.out.println("Sorry! There are no vehicles that match your search.");
+                    con.close();
+                    return 0;
+                }
+                else
+                    con.close();
+                return 1;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        //close connection
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public void customerVehiclesView(String type, String loc, String time){
-        customer.viewVehicles(type, loc, time);
+        Connection con = null;
+        //try to connect
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+
+        Statement stmt = null;
+        ResultSet rs;
+
+        //query
+        try {
+            stmt = con.createStatement();
+
+            rs = stmt.executeQuery(
+                    "SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%')");
+
+
+            while (rs.next()){
+                Integer vehicleID = rs.getInt(1);
+                String vehicleLicense = rs.getString(2);
+                String vehicleMake = rs.getString(3);
+                String vehicleModel = rs.getString(4);
+                Integer vehicleYear = rs.getInt(5);
+                String vehicleColor = rs.getString(6);
+                Integer vehicleOdo = rs.getInt(7);
+                String vehicleLoc = rs.getString(10);
+
+                System.out.println("Vehicle ID: " + vehicleID + ", License: " + vehicleLicense + ", Make: " + vehicleMake + ", Model: " + vehicleModel +
+                        ", Year: " + vehicleYear + ", Colour: " + vehicleColor + ", Odometer: " + vehicleOdo +
+                        ", Branch Location: " + vehicleLoc + "\n");
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        //close connection
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void makeNewReservation(String key) {

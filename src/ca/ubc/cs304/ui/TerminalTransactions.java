@@ -384,7 +384,6 @@ public class TerminalTransactions {
 	}
 
 	private void handleLoginYN(String type, String loc, String time){
-		//todo
 		//Customer account check y/n
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int accYN = INVALID_INPUT;
@@ -440,15 +439,14 @@ public class TerminalTransactions {
 		}
 
 		// if delegate returns 0:
-		if (delegate.){
+		if (phone == 0){
 			//sorry, looks like you don't have an account, please sign-up -> handleSignup()
 
 		}
 		else{
-			delegate.makeNewReservation();
-		}
-		// else
 			//proceed to create reservation
+			//delegate.makeNewReservation();
+		}
 
 
 	}
