@@ -183,9 +183,18 @@ public class Rent extends DatabaseConnectionHandler {
         return priceEsti;
     }
 
+    public void setRentalID(int rentalID) {
+        this.rentalID = rentalID;
+    }
+
+    public int getRentalID() {
+        return rentalID;
+    }
+
     public void setdLicense(String dLicense) {
         this.dLicense = dLicense;
     }
+
     public String getdLicense() {
         return dLicense;
     }
@@ -268,6 +277,11 @@ public class Rent extends DatabaseConnectionHandler {
 
     public String getCardName() {
         return cardName;
+    }
+
+    public Vehicle getVehicle() {
+        Vehicle vehicle = new Vehicle(vLicense);
+        return vehicle;
     }
 
 
