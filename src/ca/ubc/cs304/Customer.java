@@ -17,7 +17,7 @@ public class Customer {
 
 
 
-    // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -38,7 +38,7 @@ public class Customer {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
+
 
     // creating a new customer or finding one w/ same phone #
     public Customer(Integer phone_number, String  name, String address) {
