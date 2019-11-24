@@ -12,10 +12,14 @@ import ca.ubc.cs304.model.BranchModel;
  * Bank is the actual class that will implement the methods.
  */
 public interface TerminalTransactionsDelegate {
-	public void deleteBranch(int branchId);
-	public void insertBranch(BranchModel model);
-	public void showBranch();
-	public void updateBranch(int branchId, String name);
+	void deleteBranch(int branchId);
+	void insertBranch(BranchModel model);
+	void showBranch();
+	void updateBranch(int branchId, String name);
+
+	public void customerVehiclesCount(String type, String loc, String time);
+	public void customerVehiclesView(String type, String loc, String time);
+	public void customerMakeReservation(String key);
 	
-	public void terminalTransactionsFinished();
+	void terminalTransactionsFinished();
 }

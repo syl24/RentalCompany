@@ -1,36 +1,130 @@
 package ca.ubc.cs304;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.*;
 
 public class Customer {
-    private String dLicense;
-    private String name;
-    private String adrs;
-    private String cellPhone;
 
-    public Customer(String dLicense) {
+    public void Customer(){
+        //
+    }
+
+
+    public void viewVehiclesCount(String type, String loc, String time){
+
+        Connection con = null;
+        //try to connect
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM customers WHERE customers_dlicense = " + dLicense);
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
 
-            while (rs.next()) {
-                this.dLicense = rs.getString("customers_dlicense");
-                this.name = rs.getString("customers_name");
-                this.adrs = rs.getString("customers_address");
-                this.cellPhone = rs.getString("customers_cellphone");
+
+        Statement stmt = null;
+        ResultSet rs;
+
+        //query
+        try {
+            stmt = con.createStatement();
+
+            rs = stmt.executeQuery(
+                    "SELECT COUNT (*) AS total FROM (SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%'))");
+
+            while (rs.next()){
+                Integer count = rs.getInt("total");
+                System.out.println(count);
             }
 
-    } catch (SQLException e) {
-            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
 
 
+    public void viewVehicles(String type, String loc, String time){
+
+        Connection con = null;
+        //try to connect
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+
+        Statement stmt = null;
+        ResultSet rs;
+
+        //query
+        try {
+            stmt = con.createStatement();
+
+            rs = stmt.executeQuery(
+                    "SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%')");
+
+
+            while (rs.next()){
+                Integer vehicleID = rs.getInt(1);
+                String vehicleLicense = rs.getString(2);
+                String vehicleMake = rs.getString(3);
+                String vehicleModel = rs.getString(4);
+                Integer vehicleYear = rs.getInt(5);
+                String vehicleColor = rs.getString(6);
+                Integer vehicleOdo = rs.getInt(7);
+                String vehicleLoc = rs.getString(10);
+
+                System.out.println("Vehicle ID: " + vehicleID + ", License: " + vehicleLicense + ", Make: " + vehicleMake + ", Model: " + vehicleModel +
+                        ", Year: " + vehicleYear + ", Colour: " + vehicleColor + ", Odometer: " + vehicleOdo +
+                        ", Branch Location: " + vehicleLoc + "\n");
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**customer provides the location, the type of the vehicle,
+     * and the day and time they would like to pick up and return the vehicle.*/
+
+    public void makeReservation(String key){
+
+//        Connection con = null;
+//        //try to connect
+//        try {
+//            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            try {
+//                con.close();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//
+//
+//        Statement stmt = null;
+//        ResultSet rs;
+//
+//        //query
+//        try {
+//            stmt = con.createStatement();
+//
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+    }
 
 }
+
