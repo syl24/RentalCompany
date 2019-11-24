@@ -16,7 +16,7 @@ public class Customer {
     }
 
 
-    public void viewVehiclesCount(String type, String loc, String time){
+    public Integer viewVehiclesCount(String type, String loc, String time){
 
         Connection con = null;
         //try to connect
@@ -44,14 +44,28 @@ public class Customer {
 
             while (rs.next()){
                 Integer count = rs.getInt("total");
-                System.out.println(count);
-                if (count == 0)
+                System.out.println("Available vehicles: " + count);
+                if (count == 0) {
                     System.out.println("Sorry! There are no vehicles that match your search.");
+                    con.close();
+                    return 0;
+                }
+                else
+                    con.close();
+                    return 1;
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
+        //close connection
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 
@@ -101,6 +115,13 @@ public class Customer {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+
+        //close connection
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

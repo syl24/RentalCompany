@@ -304,9 +304,10 @@ public class TerminalTransactions {
 
 		System.out.println(" ");
 
-		delegate.customerVehiclesCount(type, loc, time);
-
-		handleViewYN(type, loc, time);
+		if (delegate.customerVehiclesCount(type, loc, time) == 0)
+			handleCustomer();
+		else
+			handleViewYN(type, loc, time);
 	}
 
 	private void handleViewYN(String type, String loc, String time) {

@@ -123,8 +123,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
      * - make a reservation
      */
 
-    public void customerVehiclesCount(String type, String loc, String time){
-        customer.viewVehiclesCount(type, loc, time);
+    public Integer customerVehiclesCount(String type, String loc, String time){
+        return customer.viewVehiclesCount(type, loc, time);
     }
 
     public void customerVehiclesView(String type, String loc, String time){
