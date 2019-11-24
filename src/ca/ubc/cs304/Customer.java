@@ -60,25 +60,26 @@ public class Customer {
                 }
 
                 // this runs when no records exist that have same cellphone number
-                if (count == 0) {
-                    try(PreparedStatement ppst =
+                try(PreparedStatement ppst =
                             DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159").prepareStatement("INSERT " +
-                                    "into customers (customers_cellphone, customers_name, customers_address) " +
-                                    "values (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                                    "into customers (customers_cellphone, customers_name, customers_address, customers_dlicense) " +
+                                    "values (?, ?, ?, ?)")) {
 
-                        ppst.setString(1, phone_number);
-                        ppst.setString(2, name);
-                        ppst.setString(3, address);
+                    ppst.setString(1, phone_number);
+                    ppst.setString(2, name);
+                    ppst.setString(3, address);
+                    ppst.setString(4, dlicense);
 
-                        ppst.executeUpdate();
+                    ppst.executeUpdate();
 
-                        // testing to see if above query works
-                        try(ResultSet rs = ppst.getGeneratedKeys()) {
-                            while (rs.next()) {
-                                dlicense = rs.getString(1);
-                            }
+                    // testing to see if above query works
+                    try(ResultSet rs = ppst.getGeneratedKeys()) {
+                        while (rs.next()) {
+                            phone_number = rs.getString(1);
                         }
                     }
+                }
+                if (count == 0) {
                 }
 
                 // save new info of customer
@@ -93,9 +94,6 @@ public class Customer {
         } catch (SQLException e) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
         }
-
-
-
     }
 
 
@@ -113,6 +111,17 @@ public class Customer {
         return this.dlicense;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 
     // commented the below constructor out so mine could func
 
