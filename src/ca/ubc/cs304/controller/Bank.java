@@ -1,5 +1,7 @@
 package ca.ubc.cs304.controller;
 
+import ca.ubc.cs304.Customer;
+import ca.ubc.cs304.Reservation;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
@@ -17,7 +19,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
     private TransactionsWindow transwindow = null;
-    //private Customer customer = new Customer();
+    private Customer customer = null;
+    private Reservation reso = null;
 
     public Bank() {
         dbHandler = new DatabaseConnectionHandler();
@@ -119,7 +122,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 
 
     /**	Customer transactions
-     * - view vehicles
+     * - view # available vehicles
+     * - view available vehicles
      * - make a reservation
      */
 
@@ -136,7 +140,6 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
                 ex.printStackTrace();
             }
         }
-
 
         Statement stmt = null;
         ResultSet rs;
@@ -189,7 +192,6 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
             }
         }
 
-
         Statement stmt = null;
         ResultSet rs;
 
@@ -200,6 +202,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
             rs = stmt.executeQuery(
                     "SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%')");
 
+            System.out.println("Available vehicles: ");
+            int acc = 1;
 
             while (rs.next()){
                 Integer vehicleID = rs.getInt(1);
@@ -211,9 +215,12 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
                 Integer vehicleOdo = rs.getInt(7);
                 String vehicleLoc = rs.getString(10);
 
+                System.out.println("Vehicle " + acc + ": ");
                 System.out.println("Vehicle ID: " + vehicleID + ", License: " + vehicleLicense + ", Make: " + vehicleMake + ", Model: " + vehicleModel +
                         ", Year: " + vehicleYear + ", Colour: " + vehicleColor + ", Odometer: " + vehicleOdo +
                         ", Branch Location: " + vehicleLoc + "\n");
+
+                acc++;
 
             }
 
@@ -229,8 +236,12 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         }
     }
 
-    public void makeNewReservation(String key) {
 
+    public void customerLogin(String phone_number, String  name, String address){
+        customer = new Customer(phone_number, name, address);
+    }
+
+    public void makeNewReservation(String key) {
 
     }
 

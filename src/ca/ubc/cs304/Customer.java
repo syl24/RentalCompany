@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class Customer {
     private String name;
-    private Integer phone_number;
+    private String phone_number;
     private String address;
     private String dlicense;
     Connection con = null;
@@ -28,7 +28,7 @@ public class Customer {
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM customers WHERE customer_dlicense = " + dlicense);
             while (rs.next()) {
-                this.phone_number = rs.getInt("customers_cellphone");
+                this.phone_number = rs.getString("customers_cellphone");
                 this.name = rs.getString("customers_name");
                 this.address = rs.getString("customers_address");
                 this.dlicense = rs.getString("customers_dlicense");
@@ -37,11 +37,16 @@ public class Customer {
         } catch (SQLException e) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
         }
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
     // creating a new customer or finding one w/ same phone #
-    public Customer(Integer phone_number, String  name, String address) {
+    public Customer(String phone_number, String  name, String address) {
         try {
             ResultSet customerExist = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159").createStatement().executeQuery("SELECT " +
                     "* FROM customers WHERE customers_cellphone = " + phone_number); {
@@ -61,7 +66,7 @@ public class Customer {
                                     "into customers (customers_cellphone, customers_name, customers_address) " +
                                     "values (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-                        ppst.setInt(1, phone_number);
+                        ppst.setString(1, phone_number);
                         ppst.setString(2, name);
                         ppst.setString(3, address);
 
@@ -88,6 +93,9 @@ public class Customer {
         } catch (SQLException e) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
         }
+
+
+
     }
 
 

@@ -18,8 +18,10 @@ public interface TerminalTransactionsDelegate {
 	void updateBranch(int branchId, String name);
 
 	// Customer transactions
-	public Integer customerVehiclesCount(String type, String loc, String time);
-	public void customerVehiclesView(String type, String loc, String time);
+	Integer customerVehiclesCount(String type, String loc, String time);
+	void customerVehiclesView(String type, String loc, String time);
+
+	void customerLogin(String phone_number, String  name, String address);
 
 	public void makeNewReservation(String key);
 

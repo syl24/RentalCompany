@@ -367,8 +367,9 @@ public class TerminalTransactions {
 					case 1:
 						System.out.println("Processing...");
 						System.out.println(" ");
-						handleLoginYN(type, loc, time);
-						//handleResoYN();
+						handleLogin(type, loc, time);
+						// make reservation!
+						handleReso();
 						break;
 
 					case 2:
@@ -383,7 +384,7 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleLoginYN(String type, String loc, String time){
+/*	private void handleLoginYN(String type, String loc, String time){
 		//Customer account check y/n
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int accYN = INVALID_INPUT;
@@ -417,41 +418,36 @@ public class TerminalTransactions {
 				}
 			}
 		}
-
-	}
+	}*/
 
 	private void handleLogin(String type, String loc, String time){
 		//please enter your phone number
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-		Integer phone = null;
+		String phone = null;
 		String name = null;
+		String address = null;
 
+
+		while (phone == null || phone.length() <= 0){
+			System.out.println();
+			System.out.println("Please enter your phone number:");
+			phone = readLine();
+		}
 		while (name == null || name.length() <= 0){
 			System.out.println();
 			System.out.println("Please enter your first name:");
 			name = readLine().trim();
 		}
-
-		while (phone == null || phone <= 1000000000){
+		while (address == null || address.length() <= 0){
 			System.out.println();
-			System.out.println("Please enter your phone number:");
-			phone = readInteger(false);
+			System.out.println("Please enter address:");
+			address = readLine().trim();
 		}
 
-		// if delegate returns 0:
-		if (phone == 0){
-			//sorry, looks like you don't have an account, please sign-up -> handleSignup()
-
-		}
-		else{
-			//proceed to create reservation
-			//delegate.makeNewReservation();
-		}
-
-
+		delegate.customerLogin(phone, name, address);
 	}
 
-	private void handleSignup(String type, String loc, String time){
+	private void handleReso(){
 		//
 	}
 
