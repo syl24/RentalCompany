@@ -8,7 +8,7 @@ public class Customer {
     private String address;
     private String dlicense;
 
-    public void Customer(String name, Integer phone_number, String address, String dlicense){
+    public Customer(String name, Integer phone_number, String address, String dlicense){
         this.name = name;
         this.phone_number = phone_number;
         this.address = address;
@@ -45,7 +45,7 @@ public class Customer {
             while (rs.next()){
                 Integer count = rs.getInt("total");
                 System.out.println("Available vehicles: " + count);
-                if (count == 0) {
+                if (count <= 0) {
                     System.out.println("Sorry! There are no vehicles that match your search.");
                     con.close();
                     return 0;
@@ -124,6 +124,8 @@ public class Customer {
             e.printStackTrace();
         }
     }
+
+    private void
 
     /**customer provides the location, the type of the vehicle,
      * and the day and time they would like to pick up and return the vehicle.

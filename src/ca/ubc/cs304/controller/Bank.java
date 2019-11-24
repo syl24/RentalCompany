@@ -9,6 +9,7 @@ import ca.ubc.cs304.ui.TerminalTransactions;
 import ca.ubc.cs304.ui.TransactionsWindow;
 
 import ca.ubc.cs304.Customer;
+import ca.ubc.cs304.Reservation;
 
 /**
  * This is the main controller class that will orchestrate everything.
@@ -131,8 +132,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         customer.viewVehicles(type, loc, time);
     }
 
-    public void customerMakeReservation(String key) {
-        customer.makeReservation(key);
+    public void makeNewReservation(String key) {
+        
 
     }
 

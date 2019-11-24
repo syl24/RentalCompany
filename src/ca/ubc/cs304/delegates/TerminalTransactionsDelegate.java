@@ -17,9 +17,13 @@ public interface TerminalTransactionsDelegate {
 	void showBranch();
 	void updateBranch(int branchId, String name);
 
+	// Customer transactions
 	public Integer customerVehiclesCount(String type, String loc, String time);
 	public void customerVehiclesView(String type, String loc, String time);
-	public void customerMakeReservation(String key);
+
+	public void makeNewReservation(String key);
+
+	// Clerk Transactions
 
 	void terminalTransactionsFinished();
 }

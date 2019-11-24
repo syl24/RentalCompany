@@ -219,7 +219,8 @@ public class TerminalTransactions {
 						break;
 
 					case 2:
-						handleCustReso();
+						//handleCustReso();
+						// only reserve via search
 						break;
 
 					case 3:
@@ -296,6 +297,7 @@ public class TerminalTransactions {
 			System.out.print("Please enter a location: ");
 			loc = readLine().trim();
 		}
+		System.out.println(" ");
 
 		while (time == null || time.length() <= 0) {
 			System.out.print("Please enter a time: ");
@@ -304,7 +306,7 @@ public class TerminalTransactions {
 
 		System.out.println(" ");
 
-		if (delegate.customerVehiclesCount(type, loc, time) == 0)
+		if (delegate.customerVehiclesCount(type, loc, time) == 0) // result count == 0
 			handleCustomer();
 		else
 			handleViewYN(type, loc, time);
@@ -317,7 +319,7 @@ public class TerminalTransactions {
 
 		while (viewYN != 3) {
 			System.out.println("1. Yes");
-			System.out.println("2. No");
+			System.out.println("2. No, return to menu");
 			System.out.print("View these vehicles? ");
 
 			viewYN = readInteger(true);
@@ -328,7 +330,7 @@ public class TerminalTransactions {
 				switch (viewYN) {
 					case 1:
 						handleCustView(type, loc, time);
-						handleResoYN();
+						handleResoYN(type, loc, time);
 						break;
 
 					case 2:
@@ -347,8 +349,7 @@ public class TerminalTransactions {
 		delegate.customerVehiclesView(type, loc, time);
 	}
 
-	private void handleResoYN(){
-		//stub
+	private void handleResoYN(String type, String loc, String time){
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int resoYN = INVALID_INPUT;
 
@@ -357,14 +358,16 @@ public class TerminalTransactions {
 			System.out.println("2. No, return to menu");
 			System.out.print("Would you like to reserve one of these vehicles? ");
 
-			resoYN = readInteger(true);
+			resoYN = readInteger(false);
 
 			System.out.println(" ");
 
 			if (resoYN != 7) {
 				switch (resoYN) {
 					case 1:
-						handleCustReso();//type, loc, time);
+						System.out.println("Processing...");
+						System.out.println(" ");
+						handleLoginYN(type, loc, time);
 						//handleResoYN();
 						break;
 
@@ -380,8 +383,78 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleCustReso(){
+	private void handleLoginYN(String type, String loc, String time){
 		//todo
+		//Customer account check y/n
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int accYN = INVALID_INPUT;
+
+		while (accYN != 3) {
+			System.out.println("1. Yes, log in");
+			System.out.println("2. No, sign me up!");
+			System.out.println("3. Return to menu");
+			System.out.print("Do you have an existing account? ");
+
+			accYN = readInteger(false);
+
+			System.out.println(" ");
+
+			if (accYN != 7) {
+				switch (accYN) {
+					case 1:
+						handleLogin(type, loc, time); //go to login menu
+						break;
+
+					case 2:
+						handleSignup(type, loc, time); //go to sign-up menu
+						break;
+
+					case 3:
+						handleCustomer(); //return to main menu
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+
+	}
+
+	private void handleLogin(String type, String loc, String time){
+		//please enter your phone number
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		Integer phone = null;
+		String name = null;
+
+		while (name == null || name.length() <= 0){
+			System.out.println();
+			System.out.println("Please enter your first name:");
+			name = readLine().trim();
+		}
+
+		while (phone == null || phone <= 1000000000){
+			System.out.println();
+			System.out.println("Please enter your phone number:");
+			phone = readInteger(false);
+		}
+
+		// if delegate returns 0:
+		if (delegate.){
+			//sorry, looks like you don't have an account, please sign-up -> handleSignup()
+
+		}
+		else{
+			delegate.makeNewReservation();
+		}
+		// else
+			//proceed to create reservation
+
+
+	}
+
+	private void handleSignup(String type, String loc, String time){
+		//
 	}
 
 
