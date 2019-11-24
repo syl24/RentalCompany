@@ -27,16 +27,6 @@ public class Clerk {
         //todo
     }
 
-    public boolean rentWithReservation(int confno, int cellphone) {
-        return false;
-        //todo
-    }
-
-    public boolean rentWithoutReservation(String location, String type, Date fromdate, Time fromtime,
-                                          Date todate, Date totime) {
-        return false;
-        //todo
-    }
 
     public Object[][] getReceipt() {
         return receipt;

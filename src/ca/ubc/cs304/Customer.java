@@ -1,20 +1,116 @@
 package ca.ubc.cs304;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Customer {
     private String name;
     private Integer phone_number;
     private String address;
     private String dlicense;
+    Connection con = null;
 
-    public void Customer(String name, Integer phone_number, String address, String dlicense){
-        this.name = name;
-        this.phone_number = phone_number;
-        this.address = address;
-        this.dlicense = dlicense;
+
+
+
+
+
+
+    // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) PUTTING MY WORK UNDER THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    public Customer(String dlicense) {
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM customers WHERE customer_dlicense = " + dlicense);
+            while (rs.next()) {
+                this.phone_number = rs.getInt("customers_cellphone");
+                this.name = rs.getString("customers_name");
+                this.address = rs.getString("customers_address");
+                this.dlicense = rs.getString("customers_dlicense");
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+
+    // creating a new customer or finding one w/ same phone #
+    public Customer(Integer phone_number, String  name, String address) {
+        try {
+            ResultSet customerExist = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159").createStatement().executeQuery("SELECT " +
+                    "* FROM customers WHERE customers_cellphone = " + phone_number); {
+                int count = 0;
+                String dlicense = null;
+
+                // storing the dlicense # of existing customer
+                while(customerExist.next()) {
+                    count++;
+                    dlicense = customerExist.getString(1);
+                }
+
+                // this runs when no records exist that have same cellphone number
+                if (count == 0) {
+                    try(PreparedStatement ppst =
+                            DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159").prepareStatement("INSERT " +
+                                    "into customers (customers_cellphone, customers_name, customers_address) " +
+                                    "values (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+                        ppst.setInt(1, phone_number);
+                        ppst.setString(2, name);
+                        ppst.setString(3, address);
+
+                        ppst.executeUpdate();
+
+                        // testing to see if above query works
+                        try(ResultSet rs = ppst.getGeneratedKeys()) {
+                            while (rs.next()) {
+                                dlicense = rs.getString(1);
+                            }
+                        }
+                    }
+                }
+
+                // save new info of customer
+
+                this.phone_number = phone_number;
+                this.name = name;
+                this.address = address;
+                this.dlicense = dlicense;
+
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
+
+    // (COLEN) MY WORK IS ABOVE THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) MY WORK IS ABOVE THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) MY WORK IS ABOVE THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) MY WORK IS ABOVE THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) MY WORK IS ABOVE THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // (COLEN) MY WORK IS ABOVE THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+    // commented the below constructor out so mine could func
+
+//    public Customer(String name, Integer phone_number, String address, String dlicense){
+//        this.name = name;
+//        this.phone_number = phone_number;
+//        this.address = address;
+//        this.dlicense = dlicense;
+//    }
 
     public Integer viewVehiclesCount(String type, String loc, String time){
 
