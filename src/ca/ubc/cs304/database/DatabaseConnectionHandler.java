@@ -1,14 +1,9 @@
 package ca.ubc.cs304.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-
 import ca.ubc.cs304.model.BranchModel;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * This class handles all database related transactions
@@ -19,6 +14,8 @@ public class DatabaseConnectionHandler {
 	private static final String WARNING_TAG = "[WARNING]";
 	
 	private Connection connection = null;
+
+//	public DatabaseConnectionHandler(){}
 	
 	public DatabaseConnectionHandler() {
 		try {
@@ -28,6 +25,46 @@ public class DatabaseConnectionHandler {
 		} catch (SQLException e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
+/*		int lport;
+		String rhost;
+		int rport;
+		public void go(){
+			String user = "sshusername";
+			String password = "sshpassword";
+			String host = "remote.students.cs.ubc.ca";
+			int port=22;
+			try
+			{
+				JSch jsch = new JSch();
+				Session session = jsch.getSession(user, host, port);
+				lport = 4321;
+				rhost = "dbhost.students.cs.ubc.ca";
+				rport = 1522;
+				session.setPassword(password);
+				session.setConfig("StrictHostKeyChecking", "no");
+				System.out.println("Establishing Connection...");
+				session.connect();
+				int assinged_port=session.setPortForwardingL(lport, rhost, rport);
+				System.out.println("localhost:"+assinged_port+" -> "+rhost+":"+rport);
+			}
+			catch(Exception e){System.err.print(e);}
+		}
+
+		public boolean login(String username, String password) {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                go();
+                String url = "jdbc:oracle:thin:@localhost:1522:stu";
+                connection = DriverManager.getConnection(url, "ora_ktnliu", "a19619155");
+                connection.setAutoCommit(false);
+                System.out.println("\nConnected to Oracle!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }*/
 	}
 	
 	public void close() {

@@ -4,8 +4,12 @@ import java.sql.*;
 
 public class Customer {
 
+    public void Customer(){
+        //
+    }
 
-    public void viewVehiclesCount(String key){
+
+    public void viewVehiclesCount(String type, String loc, String time){
 
         Connection con = null;
         //try to connect
@@ -29,10 +33,7 @@ public class Customer {
             stmt = con.createStatement();
 
             rs = stmt.executeQuery(
-                    "SELECT COUNT (*) AS total FROM (SELECT * FROM vehicles" +
-                            "WHERE (vehicles_status LIKE 'AVAILABLE')" +
-                            "OR (vehicletypes_name LIKE '% " + key + " %')" +
-                            "OR (branch_location LIKE '% " + key + " %'))");
+                    "SELECT COUNT (*) AS total FROM (SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%'))");
 
             while (rs.next()){
                 Integer count = rs.getInt("total");
@@ -46,7 +47,7 @@ public class Customer {
 
 
 
-    public void viewVehicles(String key){
+    public void viewVehicles(String type, String loc, String time){
 
         Connection con = null;
         //try to connect
@@ -61,12 +62,6 @@ public class Customer {
             }
         }
 
-        
-        //regex to split key into parts lol
-        String key1 = String.valueOf(key.split("\\s", 3)[1]);
-        String key2 = String.valueOf(key.split("\\s", 3)[2]);
-        String key3 = String.valueOf(key.split("\\s", 3)[3]);
-
 
         Statement stmt = null;
         ResultSet rs;
@@ -76,11 +71,8 @@ public class Customer {
             stmt = con.createStatement();
 
             rs = stmt.executeQuery(
-                    "SELECT * FROM vehicles" +
-                            "WHERE (vehicles_status LIKE 'AVAILABLE')" +
-                            "AND ((vehicletypes_name LIKE '%" + key1 + "%')" +
-                            "OR (branch_location LIKE '%" + key2 + "%'))" +
-                            "ORDER BY vehicletypes_name");
+                    "SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%')");
+
 
             while (rs.next()){
                 Integer vehicleID = rs.getInt(1);
@@ -101,6 +93,37 @@ public class Customer {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    /**customer provides the location, the type of the vehicle,
+     * and the day and time they would like to pick up and return the vehicle.*/
+
+    public void makeReservation(String key){
+
+//        Connection con = null;
+//        //try to connect
+//        try {
+//            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_ktnliu", "a19619155");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            try {
+//                con.close();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//
+//
+//        Statement stmt = null;
+//        ResultSet rs;
+//
+//        //query
+//        try {
+//            stmt = con.createStatement();
+//
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
     }
 
 }
