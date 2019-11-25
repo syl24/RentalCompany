@@ -40,7 +40,7 @@ public class Customer {
         try {
             con.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -73,7 +73,7 @@ public class Customer {
                 // storing the dlicense # of existing customer
                 while(customerExist.next()) {
                     count++;
-                    dlicense = customerExist.getString(1);
+                    dlicense = customerExist.getString(4);
                 }
 
                 // this runs when no records exist that have same cellphone number
