@@ -46,82 +46,109 @@ public class Customer {
 
 
     // creating a new customer or finding one w/ same phone #
-    public Customer(String phone_number, String  name, String address, String dlicense) {
-
+    public Customer(String phone_number, String name, String address, String dlicense) {
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                con.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
+            try (PreparedStatement ppst = con.prepareStatement("INSERT into customers (customers_cellphone, " +
+                    "customers_name, customers_address, customers_dlicense) " +
+                    "values (?, ?, ?, ?)")) {
 
-        Statement stmt = null;
-        ResultSet customerExist;
+                ppst.setString(1, phone_number);
+                ppst.setString(2, name);
+                ppst.setString(3, address);
+                ppst.setString(4, dlicense);
 
-        try {
-            stmt = con.createStatement();
-
-            customerExist = stmt.executeQuery("SELECT * FROM customers WHERE customers_cellphone = " + phone_number);
-            {
-                int count = 0;
-                //String dlicense = null;
-
-                // storing the dlicense # of existing customer
-                while(customerExist.next()) {
-                    count++;
-                    dlicense = customerExist.getString(4);
-                }
-
-                // this runs when no records exist that have same cellphone number
-                try(PreparedStatement ppst =
-                            DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159").prepareStatement("INSERT " +
-                                    "into customers (customers_cellphone, customers_name, customers_address, customers_dlicense) " +
-                                    "values (?, ?, ?, ?)")) {
-
-                    ppst.setString(1, phone_number);
-                    ppst.setString(2, name);
-                    ppst.setString(3, address);
-                    ppst.setString(4, dlicense);
-
-                    ppst.executeUpdate();
-
-                    // testing to see if above query works
-                    try(ResultSet rs = ppst.getGeneratedKeys()) {
-                        while (rs.next()) {
-                            phone_number = rs.getString(1);
-                        }
-                    }
-                    ppst.close();
-                }
-                if (count == 0) {
-                }
-
-                // save new info of customer
-
-                this.phone_number = phone_number;
-                this.name = name;
-                this.address = address;
-                this.dlicense = dlicense;
+                ppst.executeUpdate();
 
             }
 
-            customerExist.close();
+            this.phone_number = phone_number;
+            this.name = name;
+            this.address = address;
+            this.dlicense = dlicense;
 
         } catch (SQLException e) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
         }
-
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
     }
+
+
+//    public Customer(String phone_number, String  name, String address, String dlicense) {
+//
+//        try {
+//            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            try {
+//                con.close();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//
+//        Statement stmt = null;
+//        ResultSet customerExist;
+//
+//        try {
+//            stmt = con.createStatement();
+//
+//            customerExist = stmt.executeQuery("SELECT * FROM customers WHERE customers_cellphone = " + phone_number);
+//            {
+//                int count = 0;
+//                //String dlicense = null;
+//
+//                // storing the dlicense # of existing customer
+//                while(customerExist.next()) {
+//                    count++;
+//                    dlicense = customerExist.getString(4);
+//                }
+//
+//                // this runs when no records exist that have same cellphone number
+//                try(PreparedStatement ppst =
+//                            DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159").prepareStatement("INSERT " +
+//                                    "into customers (customers_cellphone, customers_name, customers_address, customers_dlicense) " +
+//                                    "values (?, ?, ?, ?)")) {
+//
+//                    ppst.setString(1, phone_number);
+//                    ppst.setString(2, name);
+//                    ppst.setString(3, address);
+//                    ppst.setString(4, dlicense);
+//
+//                    ppst.executeUpdate();
+//
+//                    // testing to see if above query works
+//                    try(ResultSet rs = ppst.getGeneratedKeys()) {
+//                        while (rs.next()) {
+//                            phone_number = rs.getString(1);
+//                        }
+//                    }
+//                    ppst.close();
+//                }
+//                if (count == 0) {
+//                }
+//
+//                // save new info of customer
+//
+//                this.phone_number = phone_number;
+//                this.name = name;
+//                this.address = address;
+//                this.dlicense = dlicense;
+//
+//            }
+//
+//            customerExist.close();
+//
+//        } catch (SQLException e) {
+//            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
+//        }
+//
+//        try {
+//            con.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 
     // (COLEN) MY WORK IS ABOVE THIS LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
