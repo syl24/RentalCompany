@@ -45,7 +45,7 @@ public class TerminalTransactions {
 			System.out.println("1. Customer Login");
 			System.out.println("2. Clerk Login");
 			System.out.println("3. Quit");
-			System.out.print("Please choose one of the above 5 options: ");
+			System.out.print("Please choose one of the above 3 options: ");
 
 			choice = readInteger(false);
 
@@ -218,7 +218,7 @@ public class TerminalTransactions {
 			System.out.println("1. Search for vehicles");
 			//System.out.println("2. Make a reservation");
 			System.out.println("2. Return to main menu");
-			System.out.print("Please choose one of the above 3 options: ");
+			System.out.print("Please choose one of the above 2 options: ");
 
 			choice = readInteger(false);
 
@@ -401,8 +401,9 @@ public class TerminalTransactions {
 						System.out.println(" ");
 						// handleLogin();
 						// make reservation!
-						handleReso(handleLogin().getDLicense(), type, fromDate, fromTime, toDate, toTime);
-						handleResoConf(type, fromTime, toTime);
+						String d_license = handleLogin().getDLicense();
+						handleReso(d_license, type, fromDate, fromTime, toDate, toTime);
+						handleResoConf(d_license, type, fromDate, fromTime, toDate, toTime);
 
 						break;
 
@@ -456,7 +457,7 @@ public class TerminalTransactions {
 		delegate.makeNewReservation(dLicense, typeName, fromDate, fromTime, toDate, toTime);
 	}
 
-	private void handleResoConf(String type, Timestamp fromTime, Timestamp toTime){
+	private void handleResoConf(String dLicense, String type, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int confYN = INVALID_INPUT;
 
@@ -473,7 +474,7 @@ public class TerminalTransactions {
 			if (confYN != 7) {
 				switch (confYN) {
 					case 1:
-						delegate.confirmReso();
+						delegate.confirmReso(dLicense, type, fromDate, fromTime, toDate, toTime);
 						System.out.println("Your reservation details: ");
 						System.out.println("Vehicle Type: " + type);
 						System.out.println("Start Date: " + fromTime);
@@ -576,10 +577,56 @@ public class TerminalTransactions {
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
 					case 1:
-						handleCustSearch();
+						handleClerkRent();
 						break;
 
 					case 2:
+						handleClerkReturn();
+						break;
+
+					case 3:
+						handleClerkReports();
+						break;
+
+					case 4:
+						handleQuitOption();
+						break;
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+	private void handleClerkRent(){
+		//
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice = INVALID_INPUT;
+
+		while (choice != 4) {
+			System.out.println();
+			System.out.println("1. Yes");
+			System.out.println("2. No");
+			System.out.println("3. Return to menu");
+			System.out.print("Does the customer have a reservation? ");
+
+			choice = readInteger(false);
+
+			System.out.println(" ");
+
+			if (choice != INVALID_INPUT) {
+				switch (choice) {
+					case 1:
+						handleResoRent();
+						break;
+
+					case 2:
+						handleSearchRent();
+						break;
+
+					case 3:
 						showMainMenu(delegate);
 						break;
 
@@ -589,6 +636,24 @@ public class TerminalTransactions {
 				}
 			}
 		}
-
 	}
+
+	private void handleResoRent(){
+		//
+	}
+
+	private void handleSearchRent(){
+		//
+	}
+
+	private void handleClerkReturn(){
+		//
+	}
+
+	private void handleClerkReports(){
+		//
+	}
+
+
+
 }

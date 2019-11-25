@@ -27,7 +27,7 @@ public interface TerminalTransactionsDelegate {
 
 	Customer customerLogin(String phone_number, String  name, String address, String dlicense);
 	void makeNewReservation(String dlicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime);
-	void confirmReso();
+	void confirmReso(String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime);
 
 	// Clerk Transactions
 

@@ -246,8 +246,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         reso = new Reservation(dlicense, typeName, fromDate, fromTime, toDate, toTime);
     }
 
-    public void confirmReso(){
-        reso.confReso();
+    public void confirmReso(String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
+        reso.confReso(dLicense, typeName, fromDate, fromTime, toDate, toTime);
         System.out.println("Thank you for your reservation!");
         System.out.println("Your Confirmation number: " + reso.getConfNo());
     }

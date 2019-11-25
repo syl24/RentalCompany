@@ -77,7 +77,7 @@ public class Reservation {
 
 
     // returns -1 if confReso was not successful
-    public int confReso(String typeName, String dLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime) {
+    public int confReso(String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime) {
         int confNo = -1;
         String SQL = "INSERT into reservations (vehicletypes_name, customers_dlicense, timeperiod_fromdate, timeperiod_fromtime, " +
                 "timeperiod_todate, timeperiod_totime)" +
