@@ -475,6 +475,7 @@ public class TerminalTransactions {
 						System.out.println("Vehicle Type: " + type);
 						System.out.println("Start Date: " + fromTime);
 						System.out.println("End Date: " + toTime);
+						System.out.println(" ");
 						handleReturntoMenu();
 						break;
 
@@ -506,7 +507,7 @@ public class TerminalTransactions {
 			if (retMM != 7) {
 				switch (retMM) {
 					case 1:
-						handleCustomer();
+						showMainMenu(delegate);
 						break;
 
 					case 2:

@@ -78,6 +78,7 @@ public class Customer {
                             phone_number = rs.getString(1);
                         }
                     }
+                    ppst.close();
                 }
                 if (count == 0) {
                 }
@@ -91,9 +92,12 @@ public class Customer {
 
             }
 
+            customerExist.close();
+
         } catch (SQLException e) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
         }
+
     }
 
 

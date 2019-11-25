@@ -103,10 +103,16 @@ public class Reservation {
 
                     }
                 }
+                ppst.close();
             }
 
         } catch (SQLException e) {
             Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
+        }
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -121,6 +127,11 @@ public class Reservation {
             }
         } catch (SQLException e) {
             System.out.println("UPDATE HAS FAILED");
+        }
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
