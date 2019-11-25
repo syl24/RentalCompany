@@ -643,7 +643,100 @@ public class TerminalTransactions {
 	}
 
 	private void handleSearchRent(){
-		//
+		String type = null;
+		String loc = null;
+		Date fromDate = null;
+		Timestamp fromTime = null;
+		Date toDate = null;
+		Timestamp toTime = null;
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice_type = INVALID_INPUT;
+
+
+		while (type == null || type.length() <= 0){
+			System.out.println("1. SUV");
+			System.out.println("2. Economy");
+			System.out.println("3. Compact");
+			System.out.println("4. Standard");
+			System.out.println("5. Full");
+			System.out.println("6. Truck");
+			System.out.print("Please enter a vehicle type: ");
+
+			choice_type = readInteger(true);
+
+			System.out.println(" ");
+
+			if (choice_type != 7) {
+				switch (choice_type) {
+					case 1:
+						type = "SUV";
+						break;
+
+					case 2:
+						type = "ECONOMY";
+						break;
+
+					case 3:
+						type = "COMPACT";
+						break;
+
+					case 4:
+						type = "STANDARD";
+						break;
+
+					case 5:
+						type = "FULL";
+						break;
+
+					case 6:
+						type = "TRUCK";
+						break;
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+
+			// type = readLine().trim();
+		}
+
+		while (loc == null || loc.length() <= 0) {
+
+			System.out.print("Please enter a location: ");
+			loc = readLine().trim();
+		}
+		System.out.println(" ");
+
+		while (fromDate == null) {
+			System.out.print("Please enter a Start Date: ");
+			fromDate = Date.valueOf(readLine().trim());
+		}
+		System.out.println(" ");
+
+		while (fromTime == null) {
+			System.out.print("Please enter a Start time: ");
+			fromTime = Timestamp.valueOf(readLine().trim());
+		}
+		System.out.println(" ");
+
+		while (toDate == null) {
+			System.out.print("Please enter an End Date: ");
+			toDate = Date.valueOf(readLine().trim());
+		}
+		System.out.println(" ");
+
+		while (toTime == null) {
+			System.out.print("Please enter an End Time: ");
+			toTime = Timestamp.valueOf(readLine().trim());
+		}
+		System.out.println(" ");
+
+		if (delegate.customerVehiclesCount(type, loc) == 0) // result count == 0
+			handleCustomer();
+		else
+			handleViewYN(type, loc, fromDate, fromTime, toDate, toTime);
 	}
 
 	private void handleClerkReturn(){
