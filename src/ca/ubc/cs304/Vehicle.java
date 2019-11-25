@@ -107,7 +107,7 @@ public class Vehicle extends VehicleType {
         Connection con = null;
         // try to connect
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM vehicles WHERE vehicles_license=" + vLicense); {
                 while(rs.next()) {
                     System.out.println("SEARCHING FOR VEHICLE WITH LICENSE " + vLicense);
@@ -152,7 +152,7 @@ public class Vehicle extends VehicleType {
     public boolean getStatus() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
             // checking the rentals table
             try (ResultSet rs1 = con.createStatement().executeQuery(
                     "SELECT vehicles_license FROM rentals WHERE vehicles_license = " + this.vLicense)) {

@@ -5,6 +5,7 @@ import ca.ubc.cs304.model.BranchModel;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 /**
  * This interface uses the delegation design pattern where instead of having
@@ -30,6 +31,10 @@ public interface TerminalTransactionsDelegate {
 	void confirmReso(String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime);
 
 	// Clerk Transactions
+	int clerkReso();
+	void makeNewRental(int confNo, String vLicense, String dLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime,
+					   int odometer, String cardName, int cardNo, Date expDate);
+	LinkedList<String> getOneCar(String type, String loc, Timestamp fromTime, Timestamp toTime);
 
 	void terminalTransactionsFinished();
 }

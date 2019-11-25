@@ -30,7 +30,7 @@ public class Reservation {
 
         // try to connect
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM reservations WHERE reservations_confNo = " + confNo);
 
             // additional eqipment?
@@ -115,6 +115,7 @@ public class Reservation {
 
 
     // returns -1 if confReso was not successful
+    // actually inserts reso into database
     public void confReso(int id, String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime) {
         int confNo = -1;
 
@@ -159,7 +160,7 @@ public class Reservation {
      */
     public void cancelReso(int id) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
             Statement st = con.createStatement(); {
                 st.executeUpdate("DELETE FROM reservations WHERE reservations_confNo = " + id + ";");
             }

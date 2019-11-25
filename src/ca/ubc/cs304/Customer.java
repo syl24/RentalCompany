@@ -25,7 +25,7 @@ public class Customer {
 
     public Customer(String dlicense) {
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM customers WHERE customer_dlicense = " + dlicense);
             while (rs.next()) {
                 this.phone_number = rs.getString("customers_cellphone");
@@ -48,7 +48,7 @@ public class Customer {
     // creating a new customer or finding one w/ same phone #
     public Customer(String phone_number, String name, String address, String dlicense) {
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
             try (PreparedStatement ppst = con.prepareStatement("INSERT into customers (customers_cellphone, " +
                     "customers_name, customers_address, customers_dlicense) " +
                     "values (?, ?, ?, ?)")) {

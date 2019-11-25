@@ -7,19 +7,19 @@ import java.util.logging.Logger;
 public class Rent extends DatabaseConnectionHandler {
     private Connection con;
     final int H = 3600000, D = 86400000, W = 604800000;
-    private String dLicense;
-    private String vLicense;
-    private int confNo;
     private int rentalID;
+    private String vLicense;
+    private String dLicense;
     private Date fromDate;
     private Timestamp fromTime;
     private Date toDate;
     private Timestamp toTime;
-    private int estimate;
-    private int cardNo;
-    private Date expDate;
     private int odometer;
     private String cardName;
+    private int cardNo;
+    private Date expDate;
+    private int confNo;
+    private int estimate;
     private int vid;
 
 //    private ArrayList<AdditionalEquipment> addEquip;
@@ -36,7 +36,7 @@ public class Rent extends DatabaseConnectionHandler {
 //        this.addEquip = new ArrayList<>();
         // try to connect
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM rentals WHERE " + "rentals_id=" + rentID);
 
             // add rental info to rental model
@@ -78,32 +78,96 @@ public class Rent extends DatabaseConnectionHandler {
     /*
     Create Rent object with these following parameters.
      */
-    public Rent (String dLicense, int confNo, String vLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime,
+    public Rent (int confNo, String vLicense, String dLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime,
                  int odometer, String cardName, int cardNo, Date expDate) {
-        this.dLicense = dLicense;
-        this.confNo = confNo;
         this.vLicense = vLicense;
+        this.dLicense = dLicense;
         this.fromDate = fromDate;
         this.fromTime = fromTime;
         this.toDate = toDate;
         this.toTime = toTime;
         this.odometer = odometer;
-        this.cardNo = cardNo;
         this.cardName = cardName;
+        this.cardNo = cardNo;
         this.expDate = expDate;
+        this.confNo = confNo;
 
         Vehicle vehicle = new Vehicle(this.vLicense);
         vid = vehicle.getVID();
 
         // calc estimate for customer
         this.estimate = estiPrice();
+
+        //try to connect
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        Statement stmt = null;
+        ResultSet rs;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                try {
+                    this.rentalID = rs.getInt(1);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // close when done
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /*
     Finalizes rent process and inserts rental entry into DB
      */
-    public void confRent() {
-        Connection con = null;
+    public void confRent(int confNo) {
+
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        String query = "INSERT INTO rentals (rentals_id, vehicles_license, customers_dlicense, timeperiod_fromdate," +
+        "timeperiod_fromtime, timeperiod_todate, timeperiod_totime, rentals_odometer, rentals_cardname," +
+                "rentals_cardno, rentals_expdate, reservations_confNo)" +
+                "values (" + rentalID + dLicense + "," + vLicense + "," + fromDate + "," + fromTime + "," + toDate + "," +
+                toTime + "," + odometer + "," + cardName + "," + cardNo + "," + expDate + confNo + ")";
+
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(query);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        /*Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159"); {
                 try (PreparedStatement ppst = con.prepareStatement("INSERT INTO rentals (customers_dlicense, vehicles_license" +
@@ -141,7 +205,7 @@ public class Rent extends DatabaseConnectionHandler {
 
         } catch (SQLException e) {
             Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
-        }
+        }*/
 
         try {
             con.close();

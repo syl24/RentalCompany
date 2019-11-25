@@ -1,6 +1,7 @@
 package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.Customer;
+import ca.ubc.cs304.Rent;
 import ca.ubc.cs304.Reservation;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
@@ -11,6 +12,7 @@ import ca.ubc.cs304.ui.TerminalTransactions;
 import ca.ubc.cs304.ui.TransactionsWindow;
 
 import java.sql.*;
+import java.util.LinkedList;
 
 /**
  * This is the main controller class that will orchestrate everything.
@@ -21,6 +23,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private TransactionsWindow transwindow = null;
     private Customer customer = null;
     private Reservation reso = null;
+    private Rent rent = null;
 
     public Bank() {
         dbHandler = new DatabaseConnectionHandler();
@@ -250,6 +253,58 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         reso.confReso(reso.getConfNo(), dLicense, typeName, fromDate, fromTime, toDate, toTime);
         System.out.println("Thank you for your reservation!");
         System.out.println("Your Confirmation number: " + reso.getConfNo());
+    }
+
+    public int clerkReso(){
+        return reso.getConfNo();
+    }
+
+    public LinkedList<String> getOneCar(String type, String loc, Timestamp fromTime, Timestamp toTime){
+        //todo
+        LinkedList<String> list = new LinkedList<>();
+
+        Connection con = null;
+        //try to connect
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        Statement stmt = null;
+        ResultSet rs;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(
+                    "SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + type + "%') AND (branch_city LIKE '%" + loc + "%') AND ROWNUM = 1");
+
+            if(rs.next()){
+                list.add(rs.getString("vehicles_license"));
+                list.add(rs.getString("vehicles_odometer"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public void makeNewRental(int confNo, String vLicense, String dLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime,
+                              int odometer, String cardName, int cardNo, Date expDate){
+        rent = new Rent(confNo, vLicense, dLicense, fromDate, fromTime, toDate, toTime, odometer, cardName, cardNo, expDate);
+        rent.confRent(confNo);
     }
 
 

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 /**
  * The class is only responsible for handling terminal text inputs. 
@@ -399,7 +400,6 @@ public class TerminalTransactions {
 					case 1:
 						System.out.println("Processing...");
 						System.out.println(" ");
-						// handleLogin();
 						// make reservation!
 						String d_license = handleLogin().getDLicense();
 						handleReso(d_license, type, fromDate, fromTime, toDate, toTime);
@@ -639,7 +639,7 @@ public class TerminalTransactions {
 	}
 
 	private void handleResoRent(){
-		//
+		//todo
 	}
 
 	private void handleSearchRent(){
@@ -672,34 +672,26 @@ public class TerminalTransactions {
 					case 1:
 						type = "SUV";
 						break;
-
 					case 2:
 						type = "ECONOMY";
 						break;
-
 					case 3:
 						type = "COMPACT";
 						break;
-
 					case 4:
 						type = "STANDARD";
 						break;
-
 					case 5:
 						type = "FULL";
 						break;
-
 					case 6:
 						type = "TRUCK";
 						break;
-
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
 				}
 			}
-
-			// type = readLine().trim();
 		}
 
 		while (loc == null || loc.length() <= 0) {
@@ -734,9 +726,158 @@ public class TerminalTransactions {
 		System.out.println(" ");
 
 		if (delegate.customerVehiclesCount(type, loc) == 0) // result count == 0
-			handleCustomer();
+			handleClerk();
 		else
-			handleViewYN(type, loc, fromDate, fromTime, toDate, toTime);
+			handleClerkViewYN(type, loc, fromDate, fromTime, toDate, toTime);
+	}
+
+	private void handleClerkViewYN(String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime) {
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int viewYN = INVALID_INPUT;
+
+		while (viewYN != 3) {
+			System.out.println("1. Yes");
+			System.out.println("2. No, return to menu");
+			System.out.print("View these vehicles? ");
+
+			viewYN = readInteger(true);
+
+			System.out.println(" ");
+
+			if (viewYN != 7) {
+				switch (viewYN) {
+					case 1:
+						handleClerkView(type, loc, fromDate, fromTime, toDate, toTime);
+						handleRentYN(type, loc, fromDate, fromTime, toDate, toTime);
+						break;
+
+					case 2:
+						handleClerk();
+						break;
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+	private void handleClerkView(String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
+		delegate.customerVehiclesView(type, loc);
+	}
+
+	private void handleRentYN(String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int rentYN = INVALID_INPUT;
+
+		while (rentYN != 3) {
+			System.out.println("1. Yes");
+			System.out.println("2. No, return to menu");
+			System.out.print("Would you like to rent one of these vehicles? ");
+
+			rentYN = readInteger(false);
+
+			System.out.println(" ");
+
+			if (rentYN != 7) {
+				switch (rentYN) {
+					case 1:
+						System.out.println("Processing...");
+						System.out.println(" ");
+
+						// rent
+						// get vLicense, odometer, and confNo
+						LinkedList<String> list = handleGetOneCar(type, loc, fromTime, toTime);
+						System.out.println("got a car");
+						String vLicense = list.get(0);
+						int odometer = Integer.parseInt(list.get(1));
+						String d_license = handleLogin().getDLicense();
+						System.out.println("logged in");
+						int confNo = handleClerkReso(d_license, type, fromDate, fromTime, toDate, toTime);
+
+						LinkedList list2 = handleCreditCard();
+						System.out.println("got credit card info");
+						String cardName = (String) list2.get(0);
+						Integer cardNo = (Integer) list2.get(1);
+						Date expDate = (Date) list2.get(2);
+						handleRent(confNo, vLicense, d_license, fromDate, fromTime, toDate, toTime, odometer, cardName, cardNo, expDate);
+
+						handleReceipt(confNo, fromDate, toDate, type, loc);
+						break;
+
+					case 2:
+						handleClerk(); //returns to menu
+						break;
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+	private LinkedList<String> handleGetOneCar(String type, String loc, Timestamp fromTime, Timestamp toTime){
+		return delegate.getOneCar(type, loc, fromTime, toTime);
+	}
+
+	private int handleClerkReso(String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
+		//
+		handleReso(dLicense, typeName, fromDate, fromTime, toDate, toTime);
+		delegate.confirmReso(dLicense, typeName, fromDate, fromTime, toDate, toTime);
+		return delegate.clerkReso();
+	}
+
+	private LinkedList handleCreditCard(){
+		String cardName = null;
+		Integer cardNo = null;
+		Date expDate = null;
+		LinkedList list = new LinkedList();
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+		while (cardName == null || cardName.length() <= 0){
+			System.out.println();
+			System.out.println("Please enter the name on your credit card:");
+			cardName = readLine().trim();
+		}
+		while (cardNo == null){
+			System.out.println();
+			System.out.println("Please enter your card number:");
+			cardNo = Integer.parseInt(readLine());
+		}
+		while (expDate == null){
+			System.out.println();
+			System.out.println("Please enter your card's expiry date:");
+			expDate = Date.valueOf(readLine().trim());
+		}
+		System.out.println();
+		list.add(cardName);
+		list.add(cardNo);
+		list.add(expDate);
+
+		return list;
+	}
+
+	private void handleRent(int confNo, String vLicense, String dLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime,
+							int odometer, String cardName, int cardNo, Date expDate){
+		delegate.makeNewRental(confNo, vLicense, dLicense, fromDate, fromTime, toDate, toTime, odometer, cardName, cardNo, expDate);
+	}
+
+	private void handleReceipt(int confNo, Date fromDate, Date toDate, String type, String loc){
+		System.out.println("Thanks for renting with us!");
+		System.out.println("Your rental receipt: ");
+		System.out.println("Confirmation number: " + confNo);
+		System.out.println("Rental start date: " + fromDate);
+		System.out.println("Rental end date: " + toDate);
+		System.out.println("Car type: " + type);
+		System.out.println("Location: " + loc);
+		System.out.println(" ");
+
+		handleReturntoMenu();
+
 	}
 
 	private void handleClerkReturn(){
