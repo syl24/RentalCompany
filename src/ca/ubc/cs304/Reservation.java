@@ -30,7 +30,7 @@ public class Reservation {
 
         // try to connect
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM reservations WHERE reservations_confNo = " + confNo);
 
             // additional eqipment?
@@ -77,7 +77,7 @@ public class Reservation {
 
     public void confReso() {
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             try (PreparedStatement ppst = con.prepareStatement("INSERT into reservations (customers_dlicense, vehicletypes_name," +
                     "timeperiod_fromdate, timeperiod_fromtime, timeperiod_todate, timeperiod_totime)" +
                     "values(?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -103,10 +103,16 @@ public class Reservation {
 
                     }
                 }
+                ppst.close();
             }
 
         } catch (SQLException e) {
             Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
+        }
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -115,12 +121,17 @@ public class Reservation {
      */
     public void cancelReso(int id) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             Statement st = con.createStatement(); {
                 st.executeUpdate("DELETE FROM reservations WHERE reservations_confNo = " + id + ";");
             }
         } catch (SQLException e) {
             System.out.println("UPDATE HAS FAILED");
+        }
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

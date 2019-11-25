@@ -107,7 +107,7 @@ public class Vehicle extends VehicleType {
         Connection con = null;
         // try to connect
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM vehicles WHERE vehicle_license=" + vLicense); {
                 while(rs.next()) {
                     System.out.println("SEARCHING FOR VEHICLE WITH LICENSE " + vLicense);
@@ -140,12 +140,19 @@ public class Vehicle extends VehicleType {
         } catch (SQLException e) {
             Logger.getLogger(Vehicle.class.getName()).log(Level.SEVERE, null, e);
         }
+
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean getStatus() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             // checking the rentals table
             try (ResultSet rs1 = con.createStatement().executeQuery(
                     "SELECT vehicles_license FROM rentals WHERE vehicles_license = " + this.vLicense)) {
@@ -168,6 +175,11 @@ public class Vehicle extends VehicleType {
             Logger.getLogger(Vehicle.class.getName()).log(Level.SEVERE, null, e);
         }
         status = true;
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return status;
     }
 
