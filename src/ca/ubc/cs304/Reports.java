@@ -46,11 +46,42 @@ public class Reports {
         } catch (SQLException e) {
             Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, e);
         }
-
-        
     }
 
-    private String addQuotation(String x) {
+    public void getReturnReports(String location, LocalDate date) {
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+
+            if (date == null) {
+                ResultSet rs = con.createStatement().executeQuery("SELECT rentals.vehicles_license, vehicles.branch_location, vehicles.branch_city, vehicles.vehicletypes_name, returns.returns_date " +
+                        "FROM rentals, vehicles, returns" +
+                        "WHERE rentals.vehicles_license = vehicles.vehicles_license AND returns.rentals_id = rentals.rentals_id " +
+                        "AND returns.returns_date = CURRENT_DATE ");
+            } else {
+                ResultSet rs = con.createStatement().executeQuery("SELECT rentals.vehicles_license, vehicles.branch_location, vehicles.branch_city, vehicles.vehicletypes_name, returns.returns_date " +
+                        "FROM rentals, vehicles, returns" +
+                        "WHERE rentals.vehicles_license = vehicles.vehicles_license AND returns.rentals_id = rentals.rentals_id " +
+                        "AND returns.returns_date = " + addQuotation(date.toString()));
+            }
+
+            if (location.equals("")) {
+                ResultSet rs = con.createStatement().executeQuery("SELECT rentals.vehicles_license, vehicles.branch_location, vehicles.branch_city, vehicles.vehicletypes_name, returns.returns_date " +
+                        "FROM rentals, vehicles, returns" +
+                        "WHERE rentals.vehicles_license = vehicles.vehicles_license AND returns.rentals_id = rentals.rentals_id " +
+                        "ORDER BY vehicles.branch_location, vehicles.vehicletypes_name ;");
+            } else {
+                ResultSet rs = con.createStatement().executeQuery("SELECT rentals.vehicles_license, vehicles.branch_location, vehicles.branch_city, vehicles.vehicletypes_name, returns.returns_date " +
+                        "FROM rentals, vehicles, returns" +
+                        "WHERE rentals.vehicles_license = vehicles.vehicles_license AND returns.rentals_id = rentals.rentals_id " +
+                        "AND vehicles.branch_location =" + addQuotation(location) + "ORDER BY vehicles.branch_location, vehicles.vehicletypes_name ;");
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+        private String addQuotation(String x) {
         return " '" + x + "' ";
     }
 
