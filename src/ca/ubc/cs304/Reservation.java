@@ -77,11 +77,11 @@ public class Reservation {
 
 
     // returns -1 if confReso was not successful
-    public int confReso(String typeName, String dLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime) {
+    public int confReso(String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime) {
         int confNo = -1;
-        String SQL = "INSERT into reservations (vehicletypes_name, customers_dlicense, timeperiod_fromdate, timeperiod_fromtime, " +
+        String SQL = "INSERT into reservations (customers_dlicense, vehicletypes_name, timeperiod_fromdate, timeperiod_fromtime, " +
                 "timeperiod_todate, timeperiod_totime)" +
-                " values (" + addQuotation(typeName) + "," + addQuotation(dLicense) + "," + addQuotation(fromDate.toString()) + "," +
+                " values (" + addQuotation(dLicense) + "," + addQuotation(typeName) + "," + addQuotation(fromDate.toString()) + "," +
                 addQuotation(fromTime.toString()) + "," + addQuotation(toDate.toString()) + "," + addQuotation(toTime.toString()) + ")";
         System.out.println(SQL);
         Statement st = null;
@@ -122,15 +122,15 @@ public class Reservation {
 //    public void confReso() {
 //        try {
 //            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
-//            try (PreparedStatement ppst = con.prepareStatement("INSERT into reservations (vehicletypes_name, customers_dlicense," +
+//            try (PreparedStatement ppst = con.prepareStatement("INSERT into reservations (customers_dlicense, vehicletypes_name," +
 //                    "timeperiod_fromdate, timeperiod_fromtime, timeperiod_todate, timeperiod_totime)" +
 //                    "values(?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
-//                System.out.println("INSERT into reservations (vehicletypes_name, customers_dlicense, " +
+//                System.out.println("INSERT into reservations (customers_dlicense, vehicletypes_name, " +
 //                        "timeperiod_fromdate, timeperiod_fromtime, timeperiod_todate, timeperiod_totime)"
 //                + "values (" + typeName + "," + dLicense + "," + fromDate + "," + fromTime + "," + toDate + "," + toTime + ")" );
 //
-//                ppst.setString(1, typeName);
-//                ppst.setString(2, dLicense);
+//                ppst.setString(1, dLicense);
+//                ppst.setString(2, typeName);
 //                ppst.setDate(3, fromDate);
 //                ppst.setTimestamp(4, fromTime);
 //                ppst.setDate(5, toDate);
