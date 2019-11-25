@@ -35,15 +35,16 @@ public class TerminalTransactions {
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
 
-		while (choice != 5) {
+		while (choice != 3) {
 			System.out.println();
-			System.out.println("1. Insert branch");
+/*			System.out.println("1. Insert branch");
 			System.out.println("2. Delete branch");
 			System.out.println("3. Update branch name");
 			System.out.println("4. Show branch");
-			System.out.println("5. Quit");
-			System.out.println("6. Customer Login");
-			System.out.println("7. Clerk Login");
+			System.out.println("5. Quit");*/
+			System.out.println("1. Customer Login");
+			System.out.println("2. Clerk Login");
+			System.out.println("3. Quit");
 			System.out.print("Please choose one of the above 5 options: ");
 
 			choice = readInteger(false);
@@ -52,7 +53,7 @@ public class TerminalTransactions {
 
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
-					case 1:
+/*					case 1:
 						handleInsertOption();
 						break;
 					case 2:
@@ -66,12 +67,15 @@ public class TerminalTransactions {
 						break;
 					case 5:
 						handleQuitOption();
-						break;
-					case 6:
+						break;*/
+					case 1:
 						handleCustomer();
 						break;
-					case 7:
+					case 2:
 						handleClerk();
+						break;
+					case 3:
+						handleQuitOption();
 						break;
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
@@ -206,15 +210,14 @@ public class TerminalTransactions {
 	 * */
 
 	private void handleCustomer(){
-		//todo
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
 
 		while (choice != 4) {
 			System.out.println();
 			System.out.println("1. Search for vehicles");
-			System.out.println("2. Make a reservation");
-			System.out.println("3. Return to main menu");
+			//System.out.println("2. Make a reservation");
+			System.out.println("2. Return to main menu");
 			System.out.print("Please choose one of the above 3 options: ");
 
 			choice = readInteger(false);
@@ -227,12 +230,12 @@ public class TerminalTransactions {
 						handleCustSearch();
 						break;
 
-					case 2:
-						//handleCustReso();
-						// only reserve via search
-						break;
+//					case 2:
+//						//handleCustReso();
+//						// only reserve via search
+//						break;
 
-					case 3:
+					case 2:
 						showMainMenu(delegate);
 						break;
 
@@ -554,6 +557,38 @@ public class TerminalTransactions {
 		 * 	c. All Daily Returns
 		 * 	d. Daily Returns (Branch)
 		 * 		- enter branch name */
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice = INVALID_INPUT;
+
+		while (choice != 4) {
+			System.out.println();
+			System.out.println("1. Rent a vehicle");
+			System.out.println("2. Return a vehicle");
+			System.out.println("3. Generate Reports");
+			System.out.println("4. Quit");
+			System.out.print("Please choose one of the above 4 options: ");
+
+			choice = readInteger(false);
+
+			System.out.println(" ");
+
+			if (choice != INVALID_INPUT) {
+				switch (choice) {
+					case 1:
+						handleCustSearch();
+						break;
+
+					case 2:
+						showMainMenu(delegate);
+						break;
+
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
 
 	}
 }
