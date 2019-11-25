@@ -25,7 +25,7 @@ public class Customer {
 
     public Customer(String dlicense) {
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM customers WHERE customer_dlicense = " + dlicense);
             while (rs.next()) {
                 this.phone_number = rs.getString("customers_cellphone");
@@ -47,8 +47,21 @@ public class Customer {
 
     // creating a new customer or finding one w/ same phone #
     public Customer(String phone_number, String  name, String address, String dlicense) {
+
         try {
-            ResultSet customerExist = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159").createStatement().executeQuery("SELECT " +
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+
+        try {
+            ResultSet customerExist = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159").createStatement().executeQuery("SELECT " +
                     "* FROM customers WHERE customers_cellphone = " + phone_number); {
                 int count = 0;
                 //String dlicense = null;
@@ -96,6 +109,12 @@ public class Customer {
 
         } catch (SQLException e) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }

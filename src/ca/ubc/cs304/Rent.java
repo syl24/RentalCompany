@@ -36,7 +36,7 @@ public class Rent extends DatabaseConnectionHandler {
 //        this.addEquip = new ArrayList<>();
         // try to connect
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM rentals WHERE " + "rentals_id=" + rentID);
 
             // add rental info to rental model
@@ -65,6 +65,12 @@ public class Rent extends DatabaseConnectionHandler {
 
         } catch (SQLException e) {
             Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
@@ -99,7 +105,7 @@ public class Rent extends DatabaseConnectionHandler {
     public void confRent() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159"); {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159"); {
                 try (PreparedStatement ppst = con.prepareStatement("INSERT INTO rentals (customers_dlicense, vehicles_license" +
                         "timeperiod_fromdate, timeperiod_fromtime, timeperiod_todate, timeperiod_totime, rentals_odometer," +
                         "rentals_cardname, rentals_cardno, rentals_expdate)" +
@@ -135,6 +141,12 @@ public class Rent extends DatabaseConnectionHandler {
 
         } catch (SQLException e) {
             Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

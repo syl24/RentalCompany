@@ -21,7 +21,7 @@ public class Return {
 
     public Return(int returnID) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM returns WHERE returns_value = " + returnID);
 
             while (rs.next()) {
@@ -33,9 +33,16 @@ public class Return {
                 this.fullTank = rs.getBoolean("returns_fulltank");
 
             }
-    } catch (SQLException e) {
+        } catch (SQLException e) {
             Logger.getLogger(Return.class.getName()).log(Level.SEVERE, null, e);
         }
+
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     // use this rentInstance
@@ -56,7 +63,7 @@ public class Return {
         totalPrice = getTotalPrice();
         // trying to connect
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
             try (PreparedStatement ppst = con.prepareStatement("INSERT into returns (rentals_id, returns_date, " +
                     "returns_time, returns_odometer, returns_fulltank) " +
                     "values (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -83,9 +90,14 @@ public class Return {
         } catch (SQLException e) {
             Logger.getLogger(Return.class.getName()).log(Level.SEVERE, null, e);
         }
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-        public int getTotalPrice() {
+    public int getTotalPrice() {
         return totalPrice;
     }
 
