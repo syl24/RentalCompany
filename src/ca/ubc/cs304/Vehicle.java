@@ -108,7 +108,7 @@ public class Vehicle extends VehicleType {
         // try to connect
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159");
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM vehicles WHERE vehicle_license=" + vLicense); {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM vehicles WHERE vehicles_license=" + vLicense); {
                 while(rs.next()) {
                     System.out.println("SEARCHING FOR VEHICLE WITH LICENSE " + vLicense);
                     this.vLicense = vLicense;
