@@ -78,7 +78,7 @@ public class Customer {
 
                 // this runs when no records exist that have same cellphone number
                 try(PreparedStatement ppst =
-                            DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:stu", "ora_colenliu", "a15539159").prepareStatement("INSERT " +
+                            DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159").prepareStatement("INSERT " +
                                     "into customers (customers_cellphone, customers_name, customers_address, customers_dlicense) " +
                                     "values (?, ?, ?, ?)")) {
 
