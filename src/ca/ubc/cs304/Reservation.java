@@ -1,8 +1,6 @@
 package ca.ubc.cs304;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Reservation {
     Connection con = null;
@@ -31,23 +29,38 @@ public class Reservation {
         // try to connect
         try {
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM reservations WHERE reservations_confNo = " + confNo);
+            ResultSet rs = con.createStatement().executeQuery("SELECT COUNT (*) AS total FROM (SELECT * FROM reservations WHERE reservations_confNo LIKE " + confNo + ")");
 
+
+            while (rs.next()){
+                Integer count = rs.getInt("total");
+                System.out.println(" ");
+                if (count <= 0) {
+                    System.out.println("Sorry! That reservation doesn't exist.");
+                    System.out.println(" ");
+                    con.close();
+                }
+                else{
+                    rs = con.createStatement().executeQuery("SELECT * FROM reservations WHERE reservations_confNo LIKE " + confNo);
+
+                    while (rs.next()) {
+                        this.id = rs.getInt("reservations_confNo");
+                        this.dLicense = rs.getString("customers_dlicense");
+                        this.typeName = rs.getString("vehicletypes_name");
+                        this.fromDate = rs.getDate("timeperiod_fromdate");
+                        this.fromTime = rs.getTimestamp("timeperiod_fromtime");
+                        this.toDate = rs.getDate("timeperiod_todate");
+                        this.toTime = rs.getTimestamp("timeperiod_totime");
+                    }
+                }
+            }
             // additional eqipment?
 
             // adding the generated results from above into our reservations model
-            while (rs.next()) {
-                this.id = rs.getInt("reservations_confNo");
-                this.dLicense = rs.getString("customers_dlicense");
-                this.typeName = rs.getString("vehicletypes_name");
-                this.fromDate = rs.getDate("timeperiod_fromdate");
-                this.fromTime = rs.getTimestamp("timeperiod_fromtime");
-                this.toDate = rs.getDate("timeperiod_todate");
-                this.toTime = rs.getTimestamp("timeperiod_totime");
-            }
             // adding any additional equipment?
         } catch (SQLException e) {
-            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
+            //Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
         }
 
         try {

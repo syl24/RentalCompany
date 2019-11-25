@@ -38,15 +38,11 @@ public class TerminalTransactions {
 
 		while (choice != 3) {
 			System.out.println();
-/*			System.out.println("1. Insert branch");
-			System.out.println("2. Delete branch");
-			System.out.println("3. Update branch name");
-			System.out.println("4. Show branch");
-			System.out.println("5. Quit");*/
 			System.out.println("1. Customer Login");
 			System.out.println("2. Clerk Login");
-			System.out.println("3. Quit");
-			System.out.print("Please choose one of the above 3 options: ");
+			System.out.println("3. View Database");
+			System.out.println("4. Quit");
+			System.out.print("Please choose one of the above 4 options: ");
 
 			choice = readInteger(false);
 
@@ -54,21 +50,6 @@ public class TerminalTransactions {
 
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
-/*					case 1:
-						handleInsertOption();
-						break;
-					case 2:
-						handleDeleteOption();
-						break;
-					case 3:
-						handleUpdateOption();
-						break;
-					case 4:
-						delegate.showBranch();
-						break;
-					case 5:
-						handleQuitOption();
-						break;*/
 					case 1:
 						handleCustomer();
 						break;
@@ -76,6 +57,9 @@ public class TerminalTransactions {
 						handleClerk();
 						break;
 					case 3:
+						handleDataBase();
+						break;
+					case 4:
 						handleQuitOption();
 						break;
 					default:
@@ -167,7 +151,7 @@ public class TerminalTransactions {
 		delegate.updateBranch(id, name);
 	}
 
-	private int readInteger(boolean allowEmpty) {
+	protected int readInteger(boolean allowEmpty) {
 		String line = null;
 		int input = INVALID_INPUT;
 		try {
@@ -230,16 +214,9 @@ public class TerminalTransactions {
 					case 1:
 						handleCustSearch();
 						break;
-
-//					case 2:
-//						//handleCustReso();
-//						// only reserve via search
-//						break;
-
 					case 2:
 						showMainMenu(delegate);
 						break;
-
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -278,27 +255,21 @@ public class TerminalTransactions {
 					case 1:
 						type = "SUV";
 						break;
-
 					case 2:
 						type = "ECONOMY";
 						break;
-
 					case 3:
 						type = "COMPACT";
 						break;
-
 					case 4:
 						type = "STANDARD";
 						break;
-
 					case 5:
 						type = "FULL";
 						break;
-
 					case 6:
 						type = "TRUCK";
 						break;
-
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -311,31 +282,31 @@ public class TerminalTransactions {
 		while (loc == null || loc.length() <= 0) {
 
 			System.out.print("Please enter a location: ");
-			loc = readLine().trim();
+			loc = readLine();
 		}
 		System.out.println(" ");
 
 		while (fromDate == null) {
 			System.out.print("Please enter a Start Date: ");
-			fromDate = Date.valueOf(readLine().trim());
+			fromDate = Date.valueOf(readLine());
 		}
 		System.out.println(" ");
 
 		while (fromTime == null) {
 			System.out.print("Please enter a Start time: ");
-			fromTime = Timestamp.valueOf(readLine().trim());
+			fromTime = Timestamp.valueOf(readLine());
 		}
 		System.out.println(" ");
 
 		while (toDate == null) {
 			System.out.print("Please enter an End Date: ");
-			toDate = Date.valueOf(readLine().trim());
+			toDate = Date.valueOf(readLine());
 		}
 		System.out.println(" ");
 
 		while (toTime == null) {
 			System.out.print("Please enter an End Time: ");
-			toTime = Timestamp.valueOf(readLine().trim());
+			toTime = Timestamp.valueOf(readLine());
 		}
 		System.out.println(" ");
 
@@ -404,13 +375,11 @@ public class TerminalTransactions {
 						String d_license = handleLogin().getDLicense();
 						handleReso(d_license, type, fromDate, fromTime, toDate, toTime);
 						handleResoConf(d_license, type, fromDate, fromTime, toDate, toTime);
-
 						break;
 
 					case 2:
 						handleCustomer(); //returns to menu
 						break;
-
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -427,7 +396,6 @@ public class TerminalTransactions {
 		String name = null;
 		String address = null;
 		String dlicense = null;
-
 
 		while (phone == null || phone.length() <= 0){
 			System.out.println();
@@ -579,19 +547,15 @@ public class TerminalTransactions {
 					case 1:
 						handleClerkRent();
 						break;
-
 					case 2:
 						handleClerkReturn();
 						break;
-
 					case 3:
 						handleClerkReports();
 						break;
-
 					case 4:
 						handleQuitOption();
 						break;
-
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -619,17 +583,14 @@ public class TerminalTransactions {
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
 					case 1:
-						handleResoRent();
+						handleYesResoRent();
 						break;
-
 					case 2:
 						handleSearchRent();
 						break;
-
 					case 3:
 						showMainMenu(delegate);
 						break;
-
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -638,8 +599,49 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleResoRent(){
+	private void handleYesResoRent(){
 		//todo
+		Integer confNo = null;
+		String loc = null;
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+		while (confNo == null){
+			System.out.println();
+			System.out.println("Please enter your reservation's confirmation number:");
+			confNo = readInteger(false);
+		}
+		while (loc == null){
+			System.out.println();
+			System.out.println("Please enter your reservation's city:");
+			loc = readLine().trim();
+		}
+
+		LinkedList info = delegate.getResoInfo(confNo);
+		handleResoRent((String) info.get(0), loc, (Date) info.get(1), (Timestamp) info.get(2), (Date) info.get(3), (Timestamp) info.get(4));
+
+	}
+
+	private void handleResoRent(String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime){
+		//todo
+
+		// rent
+		// get vLicense, odometer, and confNo
+		LinkedList<String> list = handleGetOneCar(type, loc, fromTime, toTime);
+		//System.out.println("got a car");
+		String vLicense = list.get(0);
+		int odometer = Integer.parseInt(list.get(1));
+		String d_license = handleLogin().getDLicense();
+		//System.out.println("logged in");
+		int confNo = handleClerkReso(d_license, type, fromDate, fromTime, toDate, toTime);
+
+		LinkedList list2 = handleCreditCard();
+		//System.out.println("got credit card info");
+		String cardName = (String) list2.get(0);
+		Integer cardNo = (Integer) list2.get(1);
+		Date expDate = (Date) list2.get(2);
+		handleRent(confNo, vLicense, d_license, fromDate, fromTime, toDate, toTime, odometer, cardName, cardNo, expDate);
+
+		handleReceipt(confNo, fromDate, toDate, type, loc);
 	}
 
 	private void handleSearchRent(){
@@ -751,11 +753,9 @@ public class TerminalTransactions {
 						handleClerkView(type, loc, fromDate, fromTime, toDate, toTime);
 						handleRentYN(type, loc, fromDate, fromTime, toDate, toTime);
 						break;
-
 					case 2:
 						handleClerk();
 						break;
-
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -790,15 +790,15 @@ public class TerminalTransactions {
 						// rent
 						// get vLicense, odometer, and confNo
 						LinkedList<String> list = handleGetOneCar(type, loc, fromTime, toTime);
-						System.out.println("got a car");
+						//System.out.println("got a car");
 						String vLicense = list.get(0);
 						int odometer = Integer.parseInt(list.get(1));
 						String d_license = handleLogin().getDLicense();
-						System.out.println("logged in");
+						//System.out.println("logged in");
 						int confNo = handleClerkReso(d_license, type, fromDate, fromTime, toDate, toTime);
 
 						LinkedList list2 = handleCreditCard();
-						System.out.println("got credit card info");
+						//System.out.println("got credit card info");
 						String cardName = (String) list2.get(0);
 						Integer cardNo = (Integer) list2.get(1);
 						Date expDate = (Date) list2.get(2);
@@ -810,7 +810,6 @@ public class TerminalTransactions {
 					case 2:
 						handleClerk(); //returns to menu
 						break;
-
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -890,4 +889,72 @@ public class TerminalTransactions {
 
 
 
+
+
+
+	/**
+	 *
+	 *
+	 * Databse
+	 *
+	 *
+	 * */
+
+	private void handleDataBase(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice = INVALID_INPUT;
+
+		while (choice != 5) {
+			System.out.println();
+			System.out.println("1. View Tables");
+			System.out.println("2. Add data");
+			System.out.println("3. Delete data");
+			System.out.println("4. Update data");
+			System.out.println("5. Return to main menu");
+			System.out.println("6. Quit");
+			System.out.print("Please choose one of the above 6 options: ");
+
+			choice = readInteger(false);
+
+			System.out.println(" ");
+
+			if (choice != INVALID_INPUT) {
+				switch (choice) {
+					case 1:
+						handleViewTables();
+						break;
+					case 2:
+						//handleAddData();
+						break;
+					case 3:
+						//handleDeleteData();
+						break;
+					case 4:
+						//handleUpdateData();
+						break;
+					case 5:
+						showMainMenu(delegate);
+						break;
+					case 6:
+						handleQuitOption();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+	private void handleViewTables(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		String name = null;
+
+		while (name == null || name.length() <= 0) {
+			System.out.print("Please enter a table name or 'ALL': ");
+			name = readLine();
+		}
+		System.out.println(" ");
+		delegate.viewTables(name);
+	}
 }

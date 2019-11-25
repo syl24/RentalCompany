@@ -22,6 +22,7 @@ public interface TerminalTransactionsDelegate {
 	void showBranch();
 	void updateBranch(int branchId, String name);
 
+
 	// Customer transactions
 	Integer customerVehiclesCount(String type, String loc);
 	void customerVehiclesView(String type, String loc);
@@ -30,11 +31,19 @@ public interface TerminalTransactionsDelegate {
 	void makeNewReservation(String dlicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime);
 	void confirmReso(String dLicense, String typeName, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime);
 
+
 	// Clerk Transactions
 	int clerkReso();
 	void makeNewRental(int confNo, String vLicense, String dLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime,
 					   int odometer, String cardName, int cardNo, Date expDate);
 	LinkedList<String> getOneCar(String type, String loc, Timestamp fromTime, Timestamp toTime);
+	LinkedList getResoInfo(Integer confNo);
+
+
+	// Database Transactions
+    void viewTables(String name);
+
+
 
 	void terminalTransactionsFinished();
 }

@@ -24,6 +24,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private Customer customer = null;
     private Reservation reso = null;
     private Rent rent = null;
+    private static final String DEFAULT_LOC = "Vancouver";
+    private static final String DEFAULT_TYPE = "SUV";
 
     public Bank() {
         dbHandler = new DatabaseConnectionHandler();
@@ -129,6 +131,65 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
      * - view available vehicles
      * - make a reservation
      */
+/*
+
+    public Integer customerVehiclesCount(String key){
+
+        Connection con = null;
+        //try to connect
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        Statement stmt = null;
+        ResultSet rs;
+        //query
+        try {
+            stmt = con.createStatement();
+
+            if(key == "Vancouver" || key == "Richmond") {
+                rs = stmt.executeQuery(
+                        "SELECT COUNT (*) AS total FROM (SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (branch_city LIKE '%" + key + "%'))");
+            }else{
+                rs = stmt.executeQuery(
+                        "SELECT COUNT (*) AS total FROM (SELECT * FROM vehicles WHERE (vehicles_status LIKE 'AVAILABLE') AND (vehicletypes_name LIKE '%" + key + "%') AND (branch_city LIKE '%" + DEFAULT_LOC + "%'))");
+            }
+
+            while (rs.next()){
+                Integer count = rs.getInt("total");
+                System.out.println("Available vehicles: " + count);
+                System.out.println(" ");
+                if (count <= 0) {
+                    System.out.println("Sorry! There are no vehicles that match your search.");
+                    con.close();
+                    return 0;
+                }
+                else
+                    con.close();
+                return 1;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        //close connection
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+*/
+
 
     public Integer customerVehiclesCount(String type, String loc){
         Connection con = null;
@@ -164,8 +225,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
                     return 0;
                 }
                 else
-                    con.close();
-                return 1;
+                    return 1;
+                //con.close();
             }
 
         } catch (SQLException ex) {
@@ -307,9 +368,86 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         rent.confRent(confNo);
     }
 
+    public LinkedList getResoInfo(Integer confNo){
 
+        LinkedList info = new LinkedList();
+        reso = new Reservation(confNo);
+        System.out.println("made the new reso");
+        // want: String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime
 
+        info.add(reso.getTypeName());
+        info.add(reso.getFromDate());
+        info.add(reso.getFromTime());
+        info.add(reso.getToDate());
+        info.add(reso.getToTime());
 
+        return info;
+    }
+
+    public void viewTables(String name){
+
+        Connection con = null;
+        //try to connect
+        try {
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        Statement stmt = null;
+        ResultSet rs;
+
+        try {
+            stmt = con.createStatement();
+
+            if (name.equals("ALL")){
+                rs = stmt.executeQuery("SELECT DISTINCT table_name FROM user_tables");
+                while (rs.next()){
+                    System.out.println(rs.getString(1));
+                }
+            } else {
+                rs = stmt.executeQuery("SELECT COUNT (*) AS total FROM " + name);
+                while(rs.next()){
+                    Integer count = rs.getInt("total");
+                    if (count <= 0) {
+                        System.out.println("Sorry! There are no vehicles that match your search.");
+                        con.close();
+                    }
+                    else{
+                        rs = stmt.executeQuery("SELECT count (*) AS total FROM (user_tab_columns) WHERE table_name LIKE '" + name + "'");
+                        while (rs.next()){
+                            //this is the total columns);
+                            count = rs.getInt("total");
+                        }
+                        rs = stmt.executeQuery("SELECT * FROM " + name);
+                        int acc = 1;
+                        while (rs.next()){
+                            System.out.println(name + " " + acc + ": ");
+                            for (int i = 1; i < count+1; i++){
+                                System.out.println(rs.getString(i));
+                            }
+                            acc++;
+                            System.out.println(" ");
+                        }
+                    }
+                    count = 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Sorry, that table does not exist.");
+            e.printStackTrace();
+        }
+
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
