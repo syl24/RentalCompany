@@ -59,10 +59,14 @@ public class Customer {
             }
         }
 
+        Statement stmt = null;
+        ResultSet customerExist;
 
         try {
-            ResultSet customerExist = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159").createStatement().executeQuery("SELECT " +
-                    "* FROM customers WHERE customers_cellphone = " + phone_number); {
+            stmt = con.createStatement();
+
+            customerExist = stmt.executeQuery("SELECT * FROM customers WHERE customers_cellphone = " + phone_number);
+            {
                 int count = 0;
                 //String dlicense = null;
 
