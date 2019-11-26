@@ -93,7 +93,8 @@ public class Return {
             }
             // update the returned vehicle to available
             try {
-                PreparedStatement ps = con.prepareStatement("UPDATE vehicles SET vehicles_status = 'AVAILABLE' WHERE vehicles_license = '" + rentVLicense + "'");
+                PreparedStatement ps = con.prepareStatement("UPDATE vehicles SET vehicles_status = 'AVAILABLE' WHERE vehicles_license = ?");
+                ps.setString(1, rentVLicense);
                 System.out.println("Vehicle has been returned!");
             } catch (SQLException e) {
                 e.printStackTrace();
