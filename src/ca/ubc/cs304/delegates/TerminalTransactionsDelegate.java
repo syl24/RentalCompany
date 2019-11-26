@@ -17,7 +17,7 @@ import java.util.LinkedList;
  * Bank is the actual class that will implement the methods.
  */
 public interface TerminalTransactionsDelegate {
-	void deleteBranch(int branchId);
+	void deleteBranch(String loc, String city);
 	void insertBranch(BranchModel model);
 	void showBranch();
 	void updateBranch(int branchId, String name);

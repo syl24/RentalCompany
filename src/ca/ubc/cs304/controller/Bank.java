@@ -81,8 +81,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
      *
      * Delete branch with given branch ID.
      */
-    public void deleteBranch(int branchId) {
-        dbHandler.deleteBranch(branchId);
+    public void deleteBranch(String loc, String city) {
+        dbHandler.deleteBranch(loc, city);
     }
 
     /**

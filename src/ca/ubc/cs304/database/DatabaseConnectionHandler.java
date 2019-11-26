@@ -77,17 +77,32 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
-	public void deleteBranch(int branchId) {
+	public void deleteBranch(String loc, String city) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM branch WHERE branch_id = ?");
-			ps.setInt(1, branchId);
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+			connection.setAutoCommit(false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM branch WHERE branch_location = '"+ loc +"' AND branch_city = '" + city + "'");
+//			ps.setString(1, loc);
+//			ps.setString(2, city);
 
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Branch " + branchId + " does not exist!");
+				System.out.println(WARNING_TAG + " Branch " + loc + " in " + city + " does not exist!");
 			}
-
+			else{
 			connection.commit();
+			System.out.print("Deleted " + loc + " in " + city + " from BRANCH!");
+			System.out.print(" ");
+			}
 
 
 			ps.close();
@@ -119,10 +134,14 @@ public class DatabaseConnectionHandler {
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
 				System.out.println(WARNING_TAG + " "+ table +" " + key + " does not exist!");
+				System.out.print(" ");
+
 			}
 
 			connection.commit();
 			System.out.print("Deleted "+ key + " from " + table + "!");
+			System.out.print(" ");
+
 
 			ps.close();
 		} catch (SQLException e) {
@@ -159,10 +178,14 @@ public class DatabaseConnectionHandler {
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
 				System.out.println(WARNING_TAG + " "+ table +" " + key + " does not exist!");
+				System.out.print(" ");
+
 			}
 
 			connection.commit();
 			System.out.print("Deleted "+ key + " from " + table + "!");
+			System.out.print(" ");
+
 
 			ps.close();
 		} catch (SQLException e) {

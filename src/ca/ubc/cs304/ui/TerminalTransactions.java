@@ -71,14 +71,19 @@ public class TerminalTransactions {
 	}
 
 	private void handleDeleteOption() {
-		int branchId = INVALID_INPUT;
-		while (branchId == INVALID_INPUT) {
-			System.out.print("Please enter the branch ID you wish to delete: ");
-			branchId = readInteger(false);
-			if (branchId != INVALID_INPUT) {
-				delegate.deleteBranch(branchId);
-			}
+		String loc = null;
+		String city = null;
+
+		while (loc == null) {
+			System.out.print("Please enter the branch location you wish to delete: ");
+			loc = readLine().trim();
 		}
+		while (city == null) {
+			System.out.print("Please enter the city where that branch is located: ");
+			city = readLine().trim();
+		}
+
+			delegate.deleteBranch(loc, city);
 	}
 
 	private void handleInsertOption() {
@@ -1049,6 +1054,7 @@ public class TerminalTransactions {
 	}
 
 	private void handleDeleteData(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		String table = null;
 		String primaryKey = null;
 		String key = null;
@@ -1075,6 +1081,9 @@ public class TerminalTransactions {
 				case "RETURNS":
 					primaryKey = "rentals_id ";
 					break;
+				case "BRANCH":
+					handleDeleteOption();
+					handleDataBase();
 				default:
 					System.out.println(WARNING_TAG + " The table that you entered was not a valid option.");
 					handleDeleteData();
@@ -1096,4 +1105,5 @@ public class TerminalTransactions {
 			delegate.deleteData(table, primaryKey, key);
 
 	}
+
 }
