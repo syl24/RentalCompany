@@ -1,9 +1,6 @@
 package ca.ubc.cs304.controller;
 
-import ca.ubc.cs304.Customer;
-import ca.ubc.cs304.Rent;
-import ca.ubc.cs304.Reports;
-import ca.ubc.cs304.Reservation;
+import ca.ubc.cs304.*;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
@@ -28,6 +25,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private static final String DEFAULT_LOC = "Vancouver";
     private static final String DEFAULT_TYPE = "SUV";
     private Reports report = new Reports();
+    private Return ret = null;
 
     public Bank() {
         dbHandler = new DatabaseConnectionHandler();
@@ -323,7 +321,6 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     }
 
     public LinkedList<String> getOneCar(String type, String loc, Timestamp fromTime, Timestamp toTime){
-        //todo
         LinkedList<String> list = new LinkedList<>();
 
         Connection con = null;
@@ -384,6 +381,11 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         info.add(reso.getToTime());
 
         return info;
+    }
+
+    public void processReturn(Integer rentID) {
+        ret = new Return(rentID);
+        ret.confReturn();
     }
 
     public void viewTables(String name){

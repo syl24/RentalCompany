@@ -38,14 +38,15 @@ public interface TerminalTransactionsDelegate {
 					   int odometer, String cardName, int cardNo, Date expDate);
 	LinkedList<String> getOneCar(String type, String loc, Timestamp fromTime, Timestamp toTime);
 	LinkedList getResoInfo(Integer confNo);
-
+	void processReturn(Integer rentID);
 
 	// Database Transactions
-    void viewTables(String name);
-    void deleteData(String table, String primaryKey, int key);
-    void deleteData(String table, String primaryKey, String key);
+	void viewTables(String name);
+	void deleteData(String table, String primaryKey, int key);
+	void deleteData(String table, String primaryKey, String key);
 //    void updateData(String table, String primaryKey, int key, String attribute, );
 //	void updateData(String table, String primaryKey, String key);
+
 /*	void insertReservation(Integer confNo, String vtype, String dlicense, String fromdate, String fromtime, String todate, String totime);
 	void insertRental(Integer rentalID, String vLicense, String dLicense, Date fromDate, Timestamp fromTime, Date toDate,
 					  Timestamp toTime, Integer odometer, String cardName, Integer cardNo, Date expDate, Integer confNo);*/
@@ -57,7 +58,7 @@ public interface TerminalTransactionsDelegate {
 
 
 	void terminalTransactionsFinished();
-
 	void rentReports(String loc, String date);
+
 	void returnReports(String loc, String date);
 }

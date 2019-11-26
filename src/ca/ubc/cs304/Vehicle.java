@@ -103,6 +103,7 @@ public class Vehicle extends VehicleType {
         return bCity;
     }
 
+
     public Vehicle(String vLicense) {
         Connection con = null;
         // try to connect

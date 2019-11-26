@@ -55,8 +55,6 @@ public class Rent extends DatabaseConnectionHandler {
                 Vehicle vehicle = new Vehicle(this.vLicense);
                 vid = vehicle.getVID();
 
-
-
             }
 
 
