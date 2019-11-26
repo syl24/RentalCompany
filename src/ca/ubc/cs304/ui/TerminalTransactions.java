@@ -941,7 +941,7 @@ public class TerminalTransactions {
 			System.out.println("1. View Tables");
 			System.out.println("2. Add data");
 			System.out.println("3. Delete data");
-			System.out.println("4. Update data");
+			System.out.println("4. Update Customers data");
 			System.out.println("5. Return to main menu");
 			System.out.println("6. Quit");
 			System.out.print("Please choose one of the above 6 options: ");
@@ -965,7 +965,7 @@ public class TerminalTransactions {
 						handleDataBase();
 						break;
 					case 4:
-						//handleUpdateData();
+						handleUpdateData();
 						handleDataBase();
 						break;
 					case 5:
@@ -998,17 +998,11 @@ public class TerminalTransactions {
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
 
-		while (choice != 10) {
+		while (choice != 3) {
 			System.out.println();
-			System.out.println("1. Reservations");
-			System.out.println("2. Rentals");
-			System.out.println("3. Customers");
-			System.out.println("4. Vehicles");
-			System.out.println("5. Vehicle Types");
-			System.out.println("6. Branch");
-			System.out.println("7. Returns");
-			System.out.println("8. Return to Main Menu");
-			System.out.println("9. Quit");
+			System.out.println("1. Customers");
+			System.out.println("2. Return to Main Menu");
+			System.out.println("3. Quit");
 			System.out.print("Select which table you would like to insert data to: ");
 
 			choice = readInteger(false);
@@ -1018,33 +1012,13 @@ public class TerminalTransactions {
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
 					case 1:
-						handleInsertReso();
+						handleInsertCust();
 						handleDataBase();
 						break;
 					case 2:
-						handleInsertRent();
-						handleDataBase();
-						break;
-//					case 3:
-//						handleInsertCust();
-//						break;
-//					case 4:
-//						handleInsertVehicle();
-//						break;
-//					case 5:
-//						handleInsertVType();
-//						break;
-					case 6:
-						//branch
-						handleInsertOption();
-						break;
-//					case 7:
-//						handleInsertVehicle();
-//						break;
-					case 8:
 						showMainMenu(delegate);
 						break;
-					case 9:
+					case 3:
 						handleQuitOption();
 						break;
 					default:
@@ -1055,7 +1029,41 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleInsertReso(){
+	private void handleInsertCust(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		String phone = null;
+		String name = null;
+		String address = null;
+		String dLicense = null;
+
+		while (phone == null){
+			System.out.print("Please enter the customer's cellphone number: ");
+			System.out.print(" ");
+			phone = readLine().trim();
+		}
+		while (name == null){
+			System.out.print("Please enter the customer's name: ");
+			System.out.print(" ");
+			name = readLine().trim();
+		}
+		while (address == null){
+			System.out.print("Please enter the customer's address: ");
+			System.out.print(" ");
+			address = readLine().trim();
+		}
+		while (dLicense == null){
+			System.out.print("Please enter the customer's driver's license: ");
+			System.out.print(" ");
+			dLicense = readLine().trim();
+		}
+		delegate.insertCustomer(phone, name, address, dLicense);
+		System.out.print(" ");
+		System.out.print("Customer added to database!");
+		System.out.print(" ");
+
+	}
+
+	/*private void handleInsertReso(){
 		// enter: reservations_confNo, vehicletypes_name , customers_dlicense , timeperiod_fromdate , timeperiod_fromtime , timeperiod_todate , timeperiod_totime
 		// pass to delegate
 		// pass to bank
@@ -1188,7 +1196,7 @@ public class TerminalTransactions {
 		delegate.insertRental(rentalID, vLicense, dLicense, Date.valueOf(fromDate), Timestamp.valueOf(fromTime),
 				Date.valueOf(toDate), Timestamp.valueOf(toTime), odometer, cardName, cardNo, Date.valueOf(expDate), confNo);
 		System.out.print(" ");
-	}
+	}*/
 
 	private void handleDeleteData(){
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -1241,6 +1249,18 @@ public class TerminalTransactions {
 			//System.out.print("selected primary key: " + primaryKey);
 			delegate.deleteData(table, primaryKey, key);
 
+	}
+
+	private void handleUpdateData() {
+		String query = null;
+
+		while (query == null) {
+			System.out.print("Please enter the udpate query: ");
+			System.out.print(" ");
+			query = readLine().trim();
+			delegate.updateCustomer(query);
+		}
+		System.out.print(" ");
 	}
 
 }

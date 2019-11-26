@@ -46,9 +46,13 @@ public interface TerminalTransactionsDelegate {
     void deleteData(String table, String primaryKey, String key);
 //    void updateData(String table, String primaryKey, int key, String attribute, );
 //	void updateData(String table, String primaryKey, String key);
-	void insertReservation(Integer confNo, String vtype, String dlicense, String fromdate, String fromtime, String todate, String totime);
+/*	void insertReservation(Integer confNo, String vtype, String dlicense, String fromdate, String fromtime, String todate, String totime);
 	void insertRental(Integer rentalID, String vLicense, String dLicense, Date fromDate, Timestamp fromTime, Date toDate,
-					  Timestamp toTime, Integer odometer, String cardName, Integer cardNo, Date expDate, Integer confNo);
+					  Timestamp toTime, Integer odometer, String cardName, Integer cardNo, Date expDate, Integer confNo);*/
+
+	void insertCustomer(String phone, String name, String address, String dLicense);
+
+	void updateCustomer(String query);
 
 
 

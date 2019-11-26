@@ -305,4 +305,43 @@ public class DatabaseConnectionHandler {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
 	}
+
+	public void updateCustomer(String query) {
+		try {
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+			connection.setAutoCommit(false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Customer does not exist!");
+				System.out.print(" ");
+			}
+			connection.commit();
+			System.out.print("Updated customer!");
+
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			e.printStackTrace();
+			rollbackConnection();
+		}
+
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
