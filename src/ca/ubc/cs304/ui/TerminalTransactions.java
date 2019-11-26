@@ -912,11 +912,92 @@ public class TerminalTransactions {
 	}
 
 	private void handleClerkReturn(){
-		//
+		//todo
 	}
 
 	private void handleClerkReports(){
-		//
+		//todo
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice = INVALID_INPUT;
+
+		while (choice != 4) {
+			System.out.println();
+			System.out.println("1. Daily Rentals");
+			System.out.println("2. Daily Returns");
+			System.out.println("3. Return to main menu");
+			System.out.println("4. Quit");
+			System.out.print("Which report would you like to view?: ");
+
+			choice = readInteger(false);
+
+			System.out.println(" ");
+
+			if (choice != INVALID_INPUT) {
+				switch (choice) {
+					case 1:
+						handleReports(true);
+						handleClerkReports();
+						break;
+
+					case 2:
+						handleReports(false);
+						handleClerkReports();
+						break;
+					case 3:
+						showMainMenu(delegate);
+						break;
+					case 4:
+						handleQuitOption();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+/*	private void handleRentReport(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		String loc = null;
+		String date = null;
+
+		System.out.print("Please enter a branch location or 'ALL': ");
+		loc = readLine().trim();
+		if (loc.length() == 0)
+			loc = "ALL";
+		System.out.println(" ");
+
+		System.out.print("Please enter a date or 'TODAY': ");
+		date = readLine().trim();
+		if (date.length() == 0)
+			date = "today";
+		System.out.println(" ");
+
+		delegate.rentReports(loc, date);
+	}*/
+
+	private void handleReports(Boolean rent){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		String loc = "";
+		String date = "";
+
+		while (loc == null || loc.length() <= 0){
+			System.out.println();
+			System.out.print("Please enter a branch location or 'ALL': ");
+			loc = readLine().trim();
+		}
+
+		while (date == null || date.length() <= 0){
+			System.out.println();
+			System.out.print("Please enter a date or 'TODAY': ");
+			date = readLine().trim();
+		}
+
+		if (rent)
+			delegate.rentReports(loc, date);
+		else
+			delegate.returnReports(loc, date);
 	}
 
 
@@ -1062,141 +1143,6 @@ public class TerminalTransactions {
 		System.out.print(" ");
 
 	}
-
-	/*private void handleInsertReso(){
-		// enter: reservations_confNo, vehicletypes_name , customers_dlicense , timeperiod_fromdate , timeperiod_fromtime , timeperiod_todate , timeperiod_totime
-		// pass to delegate
-		// pass to bank
-		// to confReso (inserts)
-		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-		Integer confNo = null;
-		String vtype = null;
-		String dlicense = null;
-		String fromdate = null;
-		String fromtime = null;
-		String todate = null;
-		String totime = null;
-
-		while (confNo == null){
-			System.out.print("Please enter the reservation confirmation number: ");
-			System.out.print(" ");
-			confNo = readInteger(false);
-		}
-		while (vtype == null){
-			System.out.print("Please enter the vehicle type: ");
-			System.out.print(" ");
-			vtype = readLine().trim();
-		}
-		while (dlicense == null){
-			System.out.print("Please enter the customer's driver's license: ");
-			System.out.print(" ");
-			dlicense = readLine().trim();
-		}
-		while (fromdate == null){
-			System.out.print("Please enter the reservation start date: ");
-			System.out.print(" ");
-			fromdate = readLine().trim();
-		}
-		while (fromtime == null){
-			System.out.print("Please enter the reservation start time: ");
-			System.out.print(" ");
-			fromtime = readLine().trim();
-		}
-		while (todate == null){
-			System.out.print("Please enter the reservation end date: ");
-			System.out.print(" ");
-			todate = readLine().trim();
-		}
-		while (totime == null){
-			System.out.print("Please enter the reservation end time: ");
-			System.out.print(" ");
-			totime = readLine().trim();
-		}
-
-		delegate.insertReservation(confNo, vtype, dlicense, fromdate, fromtime, todate, totime);
-		System.out.print(" ");
-	}
-
-	private void handleInsertRent(){
-		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-		Integer rentalID = null;
-		String vLicense = null;
-		String dLicense = null;
-		String fromDate = null;
-		String fromTime = null;
-		String toDate = null;
-		String toTime = null;
-		Integer odometer = null;
-		String cardName = null;
-		Integer cardNo = null;
-		String expDate = null;
-		Integer confNo = null;
-
-		while (rentalID == null){
-			System.out.print("Please enter the rental ID: ");
-			System.out.print(" ");
-			rentalID = readInteger(false);
-		}
-		while (vLicense == null){
-			System.out.print("Please enter the vehicle license: ");
-			System.out.print(" ");
-			vLicense = readLine().trim();
-		}
-		while (dLicense == null){
-			System.out.print("Please enter the customer's driver's license: ");
-			System.out.print(" ");
-			dLicense = readLine().trim();
-		}
-		while (fromDate == null){
-			System.out.print("Please enter the reservation start date: ");
-			System.out.print(" ");
-			fromDate = readLine().trim();
-		}
-		while (fromTime == null){
-			System.out.print("Please enter the reservation start time: ");
-			System.out.print(" ");
-			fromTime = readLine().trim();
-		}
-		while (toDate == null){
-			System.out.print("Please enter the reservation end date: ");
-			System.out.print(" ");
-			toDate = readLine().trim();
-		}
-		while (toTime == null){
-			System.out.print("Please enter the reservation end time: ");
-			System.out.print(" ");
-			toTime = readLine().trim();
-		}
-		while (odometer == null){
-			System.out.print("Please enter the odometer reading: ");
-			System.out.print(" ");
-			odometer = readInteger(false);
-		}
-		while (cardName == null){
-			System.out.print("Please enter the credit card name: ");
-			System.out.print(" ");
-			cardName = readLine().trim();
-		}
-		while (cardNo == null){
-			System.out.print("Please enter the credit card number: ");
-			System.out.print(" ");
-			cardNo = readInteger(false);
-		}
-		while (expDate == null){
-			System.out.print("Please enter the credit card expiry date: ");
-			System.out.print(" ");
-			expDate = readLine().trim();
-		}
-		while (confNo == null){
-			System.out.print("Please enter the reservation confirmation number: ");
-			System.out.print(" ");
-			confNo = readInteger(false);
-		}
-
-		delegate.insertRental(rentalID, vLicense, dLicense, Date.valueOf(fromDate), Timestamp.valueOf(fromTime),
-				Date.valueOf(toDate), Timestamp.valueOf(toTime), odometer, cardName, cardNo, Date.valueOf(expDate), confNo);
-		System.out.print(" ");
-	}*/
 
 	private void handleDeleteData(){
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));

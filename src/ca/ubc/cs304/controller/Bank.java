@@ -2,6 +2,7 @@ package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.Customer;
 import ca.ubc.cs304.Rent;
+import ca.ubc.cs304.Reports;
 import ca.ubc.cs304.Reservation;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
@@ -26,6 +27,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private Rent rent = null;
     private static final String DEFAULT_LOC = "Vancouver";
     private static final String DEFAULT_TYPE = "SUV";
+    private Reports report = new Reports();
 
     public Bank() {
         dbHandler = new DatabaseConnectionHandler();
@@ -478,6 +480,14 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 
     public void updateCustomer(String query){
         dbHandler.updateCustomer(query);
+    }
+
+    public void rentReports(String loc, String date){
+        report.getRentalReports(loc, date);
+    }
+
+    public void returnReports(String loc, String date){
+        report.getReturnReports(loc, date);
     }
 
 

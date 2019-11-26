@@ -57,4 +57,7 @@ public interface TerminalTransactionsDelegate {
 
 
 	void terminalTransactionsFinished();
+
+	void rentReports(String loc, String date);
+	void returnReports(String loc, String date);
 }
