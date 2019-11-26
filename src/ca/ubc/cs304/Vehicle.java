@@ -15,7 +15,7 @@ public class Vehicle extends VehicleType {
     private int year;
     private String color;
     private int odometer;
-    private boolean status;
+    private String status;
     private String bLocation;
     private String bCity;
     private String typeName;
@@ -28,14 +28,14 @@ public class Vehicle extends VehicleType {
 
 
     public Vehicle() {
-        this(0, null, null, null, 0 ,null, 0, false, null, null, null);
+        this(0, null, null, null, 0 ,null, 0, null, null, null, null);
     }
 
 
 
 
     public Vehicle(int vid, String vLicense, String make, String model, int year, String color, int odometer,
-                   boolean status, String typeName, String bLocation, String bCity) {
+                   String status, String typeName, String bLocation, String bCity) {
         vid = this.vid;
         vLicense = this.vLicense;
         make = this.make;
@@ -109,7 +109,7 @@ public class Vehicle extends VehicleType {
         // try to connect
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM vehicles WHERE vehicles_license=" + vLicense); {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM vehicles WHERE vehicles_license= '" + vLicense + "'"); {
                 while(rs.next()) {
                     System.out.println("SEARCHING FOR VEHICLE WITH LICENSE " + vLicense);
                     this.vLicense = vLicense;
@@ -119,12 +119,12 @@ public class Vehicle extends VehicleType {
                     this.year = rs.getInt("vehicles_year");
                     this.color = rs.getString("vehicles_color");
                     this.odometer = rs.getInt("vehicles_odometer");
-                    this.status = rs.getBoolean("vehicles_status");
+                    this.status = rs.getString("vehicles_status");
                     this.typeName = rs.getString("vehicletypes_name");
                     this.bLocation = rs.getString("branch_location");
                     this.bCity = rs.getString("branch_city");
 
-                    try(ResultSet typeResult = con.createStatement().executeQuery("SELECT * FROM vehiclestypes WHERE vehicletypes_name = '" + typeName + "'")) {
+ /*                   try(ResultSet typeResult = con.createStatement().executeQuery("SELECT * FROM vehiclestypes WHERE vehicletypes_name = '" + typeName + "'")) {
                         while (typeResult.next()) {
                             System.out.println("SEARCHING FOR VEHICLE WITH TYPE EQUAL TO" + typeName);
                             this.WRate = typeResult.getInt("vehiclestypes_wrate");
@@ -134,7 +134,7 @@ public class Vehicle extends VehicleType {
                             this.DiRate = typeResult.getInt("vehiclestypes_dirate");
                             this.WiRate = typeResult.getInt("vehiclestypes_wirate");
                         }
-                    }
+                    }*/
 
                 }
             }
@@ -150,7 +150,7 @@ public class Vehicle extends VehicleType {
 
     }
 
-    public boolean getStatus() {
+    /*public boolean getStatus() {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
@@ -182,7 +182,7 @@ public class Vehicle extends VehicleType {
             e.printStackTrace();
         }
         return status;
-    }
+    }*/
 
     public int getHRate() {
         return HRate;

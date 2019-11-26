@@ -311,11 +311,12 @@ public class DatabaseConnectionHandler {
 			connection = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("Sorry, could not update with that query");
 			try {
 				connection.close();
 			} catch (SQLException ex) {
-				ex.printStackTrace();
+				//ex.printStackTrace();
 			}
 		}
 
@@ -334,7 +335,7 @@ public class DatabaseConnectionHandler {
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			rollbackConnection();
 		}
 

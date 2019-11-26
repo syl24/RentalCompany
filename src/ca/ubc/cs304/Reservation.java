@@ -28,7 +28,7 @@ public class Reservation {
 
         // try to connect
         try {
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
             ResultSet rs = con.createStatement().executeQuery("SELECT COUNT (*) AS total FROM (SELECT * FROM reservations WHERE reservations_confNo LIKE " + confNo + ")");
 
 
@@ -55,18 +55,15 @@ public class Reservation {
                 }
             }
             // additional eqipment?
+            con.close();
 
             // adding the generated results from above into our reservations model
             // adding any additional equipment?
         } catch (SQLException e) {
             //Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
-            e.printStackTrace();
-        }
+            //e.printStackTrace();
+            //System.out.println("Goodbye");
 
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
     }
@@ -112,6 +109,7 @@ public class Reservation {
                     e.printStackTrace();
                 }
             }
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -159,24 +157,32 @@ public class Reservation {
                 addQuotation(fromTime.toString()) + "," + addQuotation(toDate.toString()) + "," + addQuotation(toTime.toString()) + ")";*/
 
         PreparedStatement ps = null;
+        Statement stmt = null;
+        ResultSet rs;
 
-        String SQL = "INSERT INTO reservations VALUES (?,?,?,?,?,?,?)";
         String timePeriod = "INSERT INTO timeperiod VALUES (?,?,?,?)";
+        String SQL = "INSERT INTO reservations VALUES (?,?,?,?,?,?,?)";
 
         try {
-            ps = con.prepareStatement(timePeriod);
-            ps.setDate(1, fromDate);
-            ps.setTimestamp(2, fromTime);
-            ps.setDate(3, toDate);
-            ps.setTimestamp(4, toTime);
+            stmt = con.createStatement();
+            String query = "SELECT * FROM timeperiod WHERE (timeperiod_fromdate = TO_DATE ('" + fromDate + "', 'YYYY-MM-DD') " +
+                    " AND timeperiod_fromtime = TO_TIMESTAMP ('" + fromTime + "', 'YYYY-MM-DD HH24:MI:SS.FF') " +
+                    " AND timeperiod_todate = TO_DATE ('" + toDate + "', 'YYYY-MM-DD') " +
+                    " AND timeperiod_totime = TO_TIMESTAMP ('" + toTime + "', 'YYYY-MM-DD HH24:MI:SS.FF'))";
+            //SELECT COUNT (*) AS total FROM (SELECT * FROM timeperiod WHERE (timeperiod_fromdate = TO_DATE ('2019-11-20', 'YYYY-MM-DD')  AND timeperiod_fromtime = TO_DATE ('2019-11-20 05:00:00.0', 'YYYY-MM-DD')  AND timeperiod_todate = TO_DATE ('2019-11-25', 'YYYY-MM-DD')  AND timeperiod_totime = TO_DATE ('2019-11-25 05:00:00.0', 'YYYY-MM-DD')))
+            rs = stmt.executeQuery("SELECT COUNT (*) AS total FROM (" + query +")");
+            while (rs.next()){
+                Integer count = rs.getInt("total");
+                if (count <= 0){
+                    ps = con.prepareStatement(timePeriod);
+                    ps.setDate(1, fromDate);
+                    ps.setTimestamp(2, fromTime);
+                    ps.setDate(3, toDate);
+                    ps.setTimestamp(4, toTime);
 
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
+                    ps.executeUpdate();
+                }
+            }
 
             ps = con.prepareStatement(SQL);
             ps.setInt(1, id);
@@ -188,6 +194,8 @@ public class Reservation {
             ps.setTimestamp(7, toTime);
 
             ps.executeUpdate();
+
+            con.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

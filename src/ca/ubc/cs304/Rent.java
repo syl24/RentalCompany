@@ -174,20 +174,33 @@ public class Rent extends DatabaseConnectionHandler {
         //String query = "INSERT INTO rentals VALUES (" + rentalID + ", '" + vLicense + "', '" + dLicense + "', " + fromDate + ", " + fromTime + ", " + toDate + ", " + toTime + ", " + odometer + ", '" + cardName + "', " + cardNo + ", " + expDate + ", " + confNo +  ")";
 
         PreparedStatement ps = null;
+        Statement stmt = null;
+        ResultSet rs;
 
         String query = "INSERT INTO rentals VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         String timePeriod = "INSERT INTO timeperiod VALUES (?,?,?,?)";
 
         try {
-            ps = con.prepareStatement(timePeriod);
-            ps.setDate(1, fromDate);
-            ps.setTimestamp(2, fromTime);
-            ps.setDate(3, toDate);
-            ps.setTimestamp(4, toTime);
+            stmt = con.createStatement();
+            String query2 = "SELECT * FROM timeperiod WHERE (timeperiod_fromdate = TO_DATE ('" + fromDate + "', 'YYYY-MM-DD') " +
+                    " AND timeperiod_fromtime = TO_TIMESTAMP ('" + fromTime + "', 'YYYY-MM-DD HH24:MI:SS.FF') " +
+                    " AND timeperiod_todate = TO_DATE ('" + toDate + "', 'YYYY-MM-DD') " +
+                    " AND timeperiod_totime = TO_TIMESTAMP ('" + toTime + "', 'YYYY-MM-DD HH24:MI:SS.FF'))";
+            //SELECT COUNT (*) AS total FROM (SELECT * FROM timeperiod WHERE (timeperiod_fromdate = TO_DATE ('2019-11-20', 'YYYY-MM-DD')  AND timeperiod_fromtime = TO_DATE ('2019-11-20 05:00:00.0', 'YYYY-MM-DD')  AND timeperiod_todate = TO_DATE ('2019-11-25', 'YYYY-MM-DD')  AND timeperiod_totime = TO_DATE ('2019-11-25 05:00:00.0', 'YYYY-MM-DD')))
+            rs = stmt.executeQuery("SELECT COUNT (*) AS total FROM (" + query2 + ")");
+            while (rs.next()) {
+                Integer count = rs.getInt("total");
+                if (count <= 0) {
+                    ps = con.prepareStatement(timePeriod);
+                    ps.setDate(1, fromDate);
+                    ps.setTimestamp(2, fromTime);
+                    ps.setDate(3, toDate);
+                    ps.setTimestamp(4, toTime);
 
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
+                    ps.executeUpdate();
+                }
+            }
+        }catch (SQLException e) {
             e.printStackTrace();
         }
 

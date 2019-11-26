@@ -461,7 +461,7 @@ public class TerminalTransactions {
 			System.out.println(" ");
 			System.out.println("1. Yes");
 			System.out.println("2. No, return to menu");
-			System.out.println("4. Quit");
+			System.out.println("3. Quit");
 			System.out.print("Confirm reservation? ");
 
 			confYN = readInteger(true);
@@ -660,7 +660,10 @@ public class TerminalTransactions {
 		}
 
 		LinkedList info = delegate.getResoInfo(confNo);
-		handleResoRent((String) info.get(0), loc, (Date) info.get(1), (Timestamp) info.get(2), (Date) info.get(3), (Timestamp) info.get(4));
+		if (info != null)
+			handleResoRent((String) info.get(0), loc, (Date) info.get(1), (Timestamp) info.get(2), (Date) info.get(3), (Timestamp) info.get(4));
+		else
+			handleClerk();
 
 	}
 

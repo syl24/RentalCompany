@@ -224,9 +224,10 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
                     con.close();
                     return 0;
                 }
-                else
+                else{
+                    con.close();
                     return 1;
-                //con.close();
+                }
             }
 
         } catch (SQLException ex) {
@@ -286,6 +287,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 
                 acc++;
 
+//                con.close();
             }
 
         } catch (SQLException ex) {
@@ -371,19 +373,24 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 
         LinkedList info = new LinkedList();
         reso = new Reservation(confNo);
-        System.out.println("made the new reso");
+        //System.out.println("made the new reso");
         // want: String type, String loc, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime
 
-        info.add(reso.getTypeName());
-        info.add(reso.getFromDate());
-        info.add(reso.getFromTime());
-        info.add(reso.getToDate());
-        info.add(reso.getToTime());
+        if (reso != null && reso.getTypeName() != null){
+            info.add(reso.getTypeName());
+            info.add(reso.getFromDate());
+            info.add(reso.getFromTime());
+            info.add(reso.getToDate());
+            info.add(reso.getToTime());
+            return info;
+        }
+        else
+            return null;
 
-        return info;
     }
 
     public void processReturn(Integer rentID) {
+        ret = new Return(rentID);
         ret = new Return(rentID);
         ret.confReturn();
     }

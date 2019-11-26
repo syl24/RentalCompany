@@ -81,14 +81,14 @@ public class Reports {
         } catch (SQLException e) {
             System.out.println("Sorry, there are no reports for your search");
             System.out.println(" ");
-            e.printStackTrace();
+           // e.printStackTrace();
         }
 
 
         try {
             con.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
