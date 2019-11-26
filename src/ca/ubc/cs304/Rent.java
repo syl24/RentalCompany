@@ -135,6 +135,22 @@ public class Rent extends DatabaseConnectionHandler {
         }
     }
 
+    public Rent(int rentalID, String vLicense, String dLicense, Date fromDate, Timestamp fromTime, Date toDate, Timestamp toTime,
+                 int odometer, String cardName, int cardNo, Date expDate, int confNo) {
+        this.rentalID = rentalID;
+        this.vLicense = vLicense;
+        this.dLicense = dLicense;
+        this.fromDate = fromDate;
+        this.fromTime = fromTime;
+        this.toDate = toDate;
+        this.toTime = toTime;
+        this.odometer = odometer;
+        this.cardName = cardName;
+        this.cardNo = cardNo;
+        this.expDate = expDate;
+        this.confNo = confNo;
+    }
+
     /*
     Finalizes rent process and inserts rental entry into DB
      */
@@ -151,20 +167,53 @@ public class Rent extends DatabaseConnectionHandler {
             }
         }
 
-        String query = "INSERT INTO rentals (rentals_id, vehicles_license, customers_dlicense, timeperiod_fromdate," +
+/*        String query = "INSERT INTO rentals (rentals_id, vehicles_license, customers_dlicense, timeperiod_fromdate," +
         "timeperiod_fromtime, timeperiod_todate, timeperiod_totime, rentals_odometer, rentals_cardname," +
                 "rentals_cardno, rentals_expdate, reservations_confNo)" +
                 "values (" + rentalID + dLicense + "," + vLicense + "," + fromDate + "," + fromTime + "," + toDate + "," +
-                toTime + "," + odometer + "," + cardName + "," + cardNo + "," + expDate + confNo + ")";
+                toTime + "," + odometer + "," + cardName + "," + cardNo + "," + expDate + confNo + ")";*/
+
+        //String query = "INSERT INTO rentals VALUES (" + rentalID + ", '" + vLicense + "', '" + dLicense + "', " + fromDate + ", " + fromTime + ", " + toDate + ", " + toTime + ", " + odometer + ", '" + cardName + "', " + cardNo + ", " + expDate + ", " + confNo +  ")";
 
         PreparedStatement ps = null;
 
+        String query = "INSERT INTO rentals VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String timePeriod = "INSERT INTO timeperiod VALUES (?,?,?,?)";
+
         try {
-            ps = con.prepareStatement(query);
+            ps = con.prepareStatement(timePeriod);
+            ps.setDate(1, fromDate);
+            ps.setTimestamp(2, fromTime);
+            ps.setDate(3, toDate);
+            ps.setTimestamp(4, toTime);
+
             ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        try {
+            ps = con.prepareStatement(query);
+            ps.setInt(1, rentalID);
+            ps.setString(2, vLicense);
+            ps.setString(3, dLicense);
+            ps.setDate(4, fromDate);
+            ps.setTimestamp(5, fromTime);
+            ps.setDate(6, toDate);
+            ps.setTimestamp(7, toTime);
+            ps.setInt(8, odometer);
+            ps.setString(9, cardName);
+            ps.setInt(10, cardNo);
+            ps.setDate(11, expDate);
+            ps.setInt(12, confNo);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.print("Sorry, could not insert this rental");
+            System.out.print(" ");
+            //e.printStackTrace();
         }
 
         /*Connection con = null;

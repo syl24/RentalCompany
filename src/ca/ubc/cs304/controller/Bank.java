@@ -458,6 +458,21 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         dbHandler.deleteData(table, primaryKey, key);
     }
 
+    public void insertReservation(Integer confNo, String vtype, String dlicense, String fromdate, String fromtime, String todate, String totime){
+        reso = new Reservation(confNo, vtype, dlicense, Date.valueOf(fromdate), Timestamp.valueOf(fromtime), Date.valueOf(todate), Timestamp.valueOf(totime));
+
+        reso.confReso(confNo, vtype, dlicense, Date.valueOf(fromdate), Timestamp.valueOf(fromtime), Date.valueOf(todate), Timestamp.valueOf(totime));
+        System.out.print("Added new reservation!");
+    }
+
+    public void insertRental(Integer rentalID, String vLicense, String dLicense, Date fromDate, Timestamp fromTime,
+                             Date toDate, Timestamp toTime, Integer odometer, String cardName, Integer cardNo, Date expDate, Integer confNo) {
+        rent = new Rent(rentalID, vLicense, dLicense, fromDate, fromTime, toDate, toTime, odometer, cardName, cardNo, expDate, confNo);
+        rent.confRent(confNo);
+
+    }
+
+
 
     /**
      * TerminalTransactionsDelegate Implementation

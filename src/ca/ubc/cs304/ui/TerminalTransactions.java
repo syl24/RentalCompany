@@ -954,9 +954,11 @@ public class TerminalTransactions {
 				switch (choice) {
 					case 1:
 						handleViewTables();
+						handleDataBase();
 						break;
 					case 2:
 						handleAddData();
+						handleDataBase();
 						break;
 					case 3:
 						handleDeleteData();
@@ -964,6 +966,7 @@ public class TerminalTransactions {
 						break;
 					case 4:
 						//handleUpdateData();
+						handleDataBase();
 						break;
 					case 5:
 						showMainMenu(delegate);
@@ -1003,10 +1006,9 @@ public class TerminalTransactions {
 			System.out.println("4. Vehicles");
 			System.out.println("5. Vehicle Types");
 			System.out.println("6. Branch");
-			System.out.println("7. Time Periods");
-			System.out.println("8. Returns");
-			System.out.println("9. Return to Main Menu");
-			System.out.println("10. Quit");
+			System.out.println("7. Returns");
+			System.out.println("8. Return to Main Menu");
+			System.out.println("9. Quit");
 			System.out.print("Select which table you would like to insert data to: ");
 
 			choice = readInteger(false);
@@ -1015,34 +1017,34 @@ public class TerminalTransactions {
 
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
-/*					case 1:
+					case 1:
 						handleInsertReso();
+						handleDataBase();
 						break;
 					case 2:
 						handleInsertRent();
+						handleDataBase();
 						break;
-					case 3:
-						handleInsertCust();
-						break;
-					case 4:
-						handleInsertVehicle();
-						break;
-					case 5:
-						handleInsertVType();
-						break;
+//					case 3:
+//						handleInsertCust();
+//						break;
+//					case 4:
+//						handleInsertVehicle();
+//						break;
+//					case 5:
+//						handleInsertVType();
+//						break;
 					case 6:
+						//branch
 						handleInsertOption();
 						break;
-					case 7:
-						handleInsertVehicle();
-						break;
+//					case 7:
+//						handleInsertVehicle();
+//						break;
 					case 8:
-						handleInsertVehicle();
-						break;*/
-					case 9:
 						showMainMenu(delegate);
 						break;
-					case 10:
+					case 9:
 						handleQuitOption();
 						break;
 					default:
@@ -1051,6 +1053,141 @@ public class TerminalTransactions {
 				}
 			}
 		}
+	}
+
+	private void handleInsertReso(){
+		// enter: reservations_confNo, vehicletypes_name , customers_dlicense , timeperiod_fromdate , timeperiod_fromtime , timeperiod_todate , timeperiod_totime
+		// pass to delegate
+		// pass to bank
+		// to confReso (inserts)
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		Integer confNo = null;
+		String vtype = null;
+		String dlicense = null;
+		String fromdate = null;
+		String fromtime = null;
+		String todate = null;
+		String totime = null;
+
+		while (confNo == null){
+			System.out.print("Please enter the reservation confirmation number: ");
+			System.out.print(" ");
+			confNo = readInteger(false);
+		}
+		while (vtype == null){
+			System.out.print("Please enter the vehicle type: ");
+			System.out.print(" ");
+			vtype = readLine().trim();
+		}
+		while (dlicense == null){
+			System.out.print("Please enter the customer's driver's license: ");
+			System.out.print(" ");
+			dlicense = readLine().trim();
+		}
+		while (fromdate == null){
+			System.out.print("Please enter the reservation start date: ");
+			System.out.print(" ");
+			fromdate = readLine().trim();
+		}
+		while (fromtime == null){
+			System.out.print("Please enter the reservation start time: ");
+			System.out.print(" ");
+			fromtime = readLine().trim();
+		}
+		while (todate == null){
+			System.out.print("Please enter the reservation end date: ");
+			System.out.print(" ");
+			todate = readLine().trim();
+		}
+		while (totime == null){
+			System.out.print("Please enter the reservation end time: ");
+			System.out.print(" ");
+			totime = readLine().trim();
+		}
+
+		delegate.insertReservation(confNo, vtype, dlicense, fromdate, fromtime, todate, totime);
+		System.out.print(" ");
+	}
+
+	private void handleInsertRent(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		Integer rentalID = null;
+		String vLicense = null;
+		String dLicense = null;
+		String fromDate = null;
+		String fromTime = null;
+		String toDate = null;
+		String toTime = null;
+		Integer odometer = null;
+		String cardName = null;
+		Integer cardNo = null;
+		String expDate = null;
+		Integer confNo = null;
+
+		while (rentalID == null){
+			System.out.print("Please enter the rental ID: ");
+			System.out.print(" ");
+			rentalID = readInteger(false);
+		}
+		while (vLicense == null){
+			System.out.print("Please enter the vehicle license: ");
+			System.out.print(" ");
+			vLicense = readLine().trim();
+		}
+		while (dLicense == null){
+			System.out.print("Please enter the customer's driver's license: ");
+			System.out.print(" ");
+			dLicense = readLine().trim();
+		}
+		while (fromDate == null){
+			System.out.print("Please enter the reservation start date: ");
+			System.out.print(" ");
+			fromDate = readLine().trim();
+		}
+		while (fromTime == null){
+			System.out.print("Please enter the reservation start time: ");
+			System.out.print(" ");
+			fromTime = readLine().trim();
+		}
+		while (toDate == null){
+			System.out.print("Please enter the reservation end date: ");
+			System.out.print(" ");
+			toDate = readLine().trim();
+		}
+		while (toTime == null){
+			System.out.print("Please enter the reservation end time: ");
+			System.out.print(" ");
+			toTime = readLine().trim();
+		}
+		while (odometer == null){
+			System.out.print("Please enter the odometer reading: ");
+			System.out.print(" ");
+			odometer = readInteger(false);
+		}
+		while (cardName == null){
+			System.out.print("Please enter the credit card name: ");
+			System.out.print(" ");
+			cardName = readLine().trim();
+		}
+		while (cardNo == null){
+			System.out.print("Please enter the credit card number: ");
+			System.out.print(" ");
+			cardNo = readInteger(false);
+		}
+		while (expDate == null){
+			System.out.print("Please enter the credit card expiry date: ");
+			System.out.print(" ");
+			expDate = readLine().trim();
+		}
+		while (confNo == null){
+			System.out.print("Please enter the reservation confirmation number: ");
+			System.out.print(" ");
+			confNo = readInteger(false);
+		}
+
+		delegate.insertRental(rentalID, vLicense, dLicense, Date.valueOf(fromDate), Timestamp.valueOf(fromTime),
+				Date.valueOf(toDate), Timestamp.valueOf(toTime), odometer, cardName, cardNo, Date.valueOf(expDate), confNo);
+		System.out.print(" ");
 	}
 
 	private void handleDeleteData(){

@@ -5,6 +5,7 @@ import java.sql.*;
 public class Reservation {
     Connection con = null;
     final int H = 3600000, D = 86400000, W = 604800000;
+    private int id; //confno
     private String dLicense;
     private String vLicense;
     private String typeName;
@@ -13,7 +14,6 @@ public class Reservation {
     private Date toDate;
     private Timestamp toTime;
     private int estimate;
-    private int id;
 
     public Reservation() {
 
@@ -126,6 +126,16 @@ public class Reservation {
 
     }
 
+    public Reservation(int confNo, String vtype, String dlicense, Date fromdate, Timestamp fromtime, Date todate, Timestamp totime){
+        this.id = confNo;
+        this.dLicense = dLicense;
+        this.typeName = typeName;
+        this.fromDate = fromDate;
+        this.fromTime = fromTime;
+        this.toDate = toDate;
+        this.toTime = toTime;
+    }
+
 
     // returns -1 if confReso was not successful
     // actually inserts reso into database
@@ -143,16 +153,40 @@ public class Reservation {
             }
         }
 
-        String SQL = "INSERT into reservations (reservations_confNo, vehicletypes_name, customers_dlicense, timeperiod_fromdate, timeperiod_fromtime, " +
+        /*String SQL = "INSERT into reservations (reservations_confNo, vehicletypes_name, customers_dlicense, timeperiod_fromdate, timeperiod_fromtime, " +
                 "timeperiod_todate, timeperiod_totime)" +
                 " values (" + id + "," + addQuotation(dLicense) + "," + addQuotation(typeName) + "," + addQuotation(fromDate.toString()) + "," +
-                addQuotation(fromTime.toString()) + "," + addQuotation(toDate.toString()) + "," + addQuotation(toTime.toString()) + ")";
-        //System.out.println(SQL);
+                addQuotation(fromTime.toString()) + "," + addQuotation(toDate.toString()) + "," + addQuotation(toTime.toString()) + ")";*/
 
         PreparedStatement ps = null;
 
+        String SQL = "INSERT INTO reservations VALUES (?,?,?,?,?,?,?)";
+        String timePeriod = "INSERT INTO timeperiod VALUES (?,?,?,?)";
+
         try {
+            ps = con.prepareStatement(timePeriod);
+            ps.setDate(1, fromDate);
+            ps.setTimestamp(2, fromTime);
+            ps.setDate(3, toDate);
+            ps.setTimestamp(4, toTime);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
             ps = con.prepareStatement(SQL);
+            ps.setInt(1, id);
+            ps.setString(2, typeName);
+            ps.setString(3, dLicense);
+            ps.setDate(4, fromDate);
+            ps.setTimestamp(5, fromTime);
+            ps.setDate(6, toDate);
+            ps.setTimestamp(7, toTime);
+
             ps.executeUpdate();
 
         } catch (SQLException e) {
