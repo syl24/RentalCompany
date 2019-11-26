@@ -42,6 +42,8 @@ public interface TerminalTransactionsDelegate {
 
 	// Database Transactions
     void viewTables(String name);
+    void deleteData(String table, String primaryKey, int key);
+    void deleteData(String table, String primaryKey, String key);
 
 
 

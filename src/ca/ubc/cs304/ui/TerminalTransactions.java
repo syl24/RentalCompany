@@ -244,13 +244,16 @@ public class TerminalTransactions {
 			System.out.println("4. Standard");
 			System.out.println("5. Full");
 			System.out.println("6. Truck");
+			System.out.println("7. All vehicles");
+			System.out.println("8. Return to main menu");
+			System.out.println("9. Quit");
 			System.out.print("Please enter a vehicle type: ");
 
 			choice_type = readInteger(true);
 
 			System.out.println(" ");
 
-			if (choice_type != 7) {
+			if (choice_type != 9) {
 				switch (choice_type) {
 					case 1:
 						type = "SUV";
@@ -270,6 +273,15 @@ public class TerminalTransactions {
 					case 6:
 						type = "TRUCK";
 						break;
+					case 7:
+						type = "%";
+						break;
+					case 8:
+						handleCustomer();
+						break;
+					case 9:
+						handleQuitOption();
+						break;
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -279,11 +291,10 @@ public class TerminalTransactions {
 			// type = readLine().trim();
 		}
 
-		while (loc == null || loc.length() <= 0) {
-
-			System.out.print("Please enter a location: ");
-			loc = readLine();
-		}
+		System.out.print("Please enter a location: ");
+		loc = readLine().trim();
+		if (loc.length() == 0)
+			loc = "%";
 		System.out.println(" ");
 
 		while (fromDate == null) {
@@ -663,13 +674,16 @@ public class TerminalTransactions {
 			System.out.println("4. Standard");
 			System.out.println("5. Full");
 			System.out.println("6. Truck");
+			System.out.println("7. All vehicles");
+			System.out.println("8. Return to main menu");
+			System.out.println("9. Quit");
 			System.out.print("Please enter a vehicle type: ");
 
 			choice_type = readInteger(true);
 
 			System.out.println(" ");
 
-			if (choice_type != 7) {
+			if (choice_type != 9) {
 				switch (choice_type) {
 					case 1:
 						type = "SUV";
@@ -688,6 +702,15 @@ public class TerminalTransactions {
 						break;
 					case 6:
 						type = "TRUCK";
+						break;
+					case 7:
+						type = "%";
+						break;
+					case 8:
+						handleCustomer();
+						break;
+					case 9:
+						handleQuitOption();
 						break;
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
@@ -775,13 +798,14 @@ public class TerminalTransactions {
 		while (rentYN != 3) {
 			System.out.println("1. Yes");
 			System.out.println("2. No, return to menu");
+			System.out.println("3. Quit");
 			System.out.print("Would you like to rent one of these vehicles? ");
 
 			rentYN = readInteger(false);
 
 			System.out.println(" ");
 
-			if (rentYN != 7) {
+			if (rentYN != 3) {
 				switch (rentYN) {
 					case 1:
 						System.out.println("Processing...");
@@ -809,6 +833,9 @@ public class TerminalTransactions {
 
 					case 2:
 						handleClerk(); //returns to menu
+						break;
+					case 3:
+						handleQuitOption();
 						break;
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
@@ -924,10 +951,11 @@ public class TerminalTransactions {
 						handleViewTables();
 						break;
 					case 2:
-						//handleAddData();
+						handleAddData();
 						break;
 					case 3:
-						//handleDeleteData();
+						handleDeleteData();
+						handleDataBase();
 						break;
 					case 4:
 						//handleUpdateData();
@@ -951,10 +979,121 @@ public class TerminalTransactions {
 		String name = null;
 
 		while (name == null || name.length() <= 0) {
-			System.out.print("Please enter a table name or 'ALL': ");
+			System.out.print("Please enter a table name or 'ALL' (in all caps): ");
 			name = readLine();
 		}
 		System.out.println(" ");
 		delegate.viewTables(name);
+	}
+
+	private void handleAddData(){
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice = INVALID_INPUT;
+
+		while (choice != 10) {
+			System.out.println();
+			System.out.println("1. Reservations");
+			System.out.println("2. Rentals");
+			System.out.println("3. Customers");
+			System.out.println("4. Vehicles");
+			System.out.println("5. Vehicle Types");
+			System.out.println("6. Branch");
+			System.out.println("7. Time Periods");
+			System.out.println("8. Returns");
+			System.out.println("9. Return to Main Menu");
+			System.out.println("10. Quit");
+			System.out.print("Select which table you would like to insert data to: ");
+
+			choice = readInteger(false);
+
+			System.out.println(" ");
+
+			if (choice != INVALID_INPUT) {
+				switch (choice) {
+/*					case 1:
+						handleInsertReso();
+						break;
+					case 2:
+						handleInsertRent();
+						break;
+					case 3:
+						handleInsertCust();
+						break;
+					case 4:
+						handleInsertVehicle();
+						break;
+					case 5:
+						handleInsertVType();
+						break;
+					case 6:
+						handleInsertOption();
+						break;
+					case 7:
+						handleInsertVehicle();
+						break;
+					case 8:
+						handleInsertVehicle();
+						break;*/
+					case 9:
+						showMainMenu(delegate);
+						break;
+					case 10:
+						handleQuitOption();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+	private void handleDeleteData(){
+		String table = null;
+		String primaryKey = null;
+		String key = null;
+
+		while (table == null){
+			System.out.print("Please enter the table you wish to delete something from (in all caps): ");
+			table = readLine().trim();
+			switch (table){
+				case "VEHICLETYPES":
+					primaryKey = "vehicletypes_name";
+					break;
+				case "VEHICLES":
+					primaryKey = "vehicles_license";
+					break;
+				case "CUSTOMERS":
+					primaryKey = "customers_dlicense";
+					break;
+				case "RESERVATIONS":
+					primaryKey = "reservations_confNo";
+					break;
+				case "RENTALS":
+					primaryKey = "rentals_id";
+					break;
+				case "RETURNS":
+					primaryKey = "rentals_id ";
+					break;
+				default:
+					System.out.println(WARNING_TAG + " The table that you entered was not a valid option.");
+					handleDeleteData();
+					break;
+			}
+		}
+		while (key == null){
+			System.out.print("Please enter the key of the entry you wish to delete: ");
+			System.out.print(" ");
+			key = readLine().trim();
+		}
+
+		if (primaryKey == "rentals_id" || primaryKey == "reservations_confNo"){
+			delegate.deleteData(table, primaryKey, Integer.parseInt(key));
+
+		}
+		else
+			//System.out.print("selected primary key: " + primaryKey);
+			delegate.deleteData(table, primaryKey, key);
+
 	}
 }

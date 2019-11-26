@@ -387,6 +387,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     public void viewTables(String name){
 
         Connection con = null;
+        int counter = -1;
         //try to connect
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
@@ -421,13 +422,13 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
                         rs = stmt.executeQuery("SELECT count (*) AS total FROM (user_tab_columns) WHERE table_name LIKE '" + name + "'");
                         while (rs.next()){
                             //this is the total columns);
-                            count = rs.getInt("total");
+                            counter = rs.getInt("total");
                         }
                         rs = stmt.executeQuery("SELECT * FROM " + name);
                         int acc = 1;
                         while (rs.next()){
                             System.out.println(name + " " + acc + ": ");
-                            for (int i = 1; i < count+1; i++){
+                            for (int i = 1; i < counter+1; i++){
                                 System.out.println(rs.getString(i));
                             }
                             acc++;
@@ -439,7 +440,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
             }
         } catch (SQLException e) {
             System.out.println("Sorry, that table does not exist.");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         try {
@@ -449,7 +450,13 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
         }
     }
 
+    public void deleteData(String table, String primaryKey, int key) {
+        dbHandler.deleteData(table, primaryKey, key);
+    }
 
+    public void deleteData(String table, String primaryKey, String key) {
+        dbHandler.deleteData(table, primaryKey, key);
+    }
 
 
     /**

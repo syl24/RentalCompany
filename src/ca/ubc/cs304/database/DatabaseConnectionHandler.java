@@ -15,6 +15,7 @@ public class DatabaseConnectionHandler {
 
 	private Connection connection = null;
 
+
 //	public DatabaseConnectionHandler(){}
 
 	public DatabaseConnectionHandler() {
@@ -88,12 +89,95 @@ public class DatabaseConnectionHandler {
 
 			connection.commit();
 
+
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 			rollbackConnection();
 		}
 	}
+
+	// delete for resos, rentals, returns
+	public void deleteData(String table, String primaryKey, int key) {
+		try {
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+			connection.setAutoCommit(false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM " + table + " WHERE " + primaryKey + " LIKE " + key );
+//			ps.setString(1, primaryKey);
+//			ps.setInt(2, key);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " "+ table +" " + key + " does not exist!");
+			}
+
+			connection.commit();
+			System.out.print("Deleted "+ key + " from " + table + "!");
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// delete for vtype, customer, vehicle
+	public void deleteData(String table, String primaryKey, String key) {
+		try {
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_ktnliu", "a19619155");
+			connection.setAutoCommit(false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM " + table + " WHERE " + primaryKey + " LIKE '" + key + "'");
+//			ps.setString(1, primaryKey);
+//			ps.setString(2, key);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " "+ table +" " + key + " does not exist!");
+			}
+
+			connection.commit();
+			System.out.print("Deleted "+ key + " from " + table + "!");
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			e.printStackTrace();
+			rollbackConnection();
+		}
+
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	public void insertBranch(BranchModel model) {
 		try {
