@@ -100,7 +100,7 @@ public class Return {
                 e.printStackTrace();
                 System.out.println("Could not update vehicle");
             }
-
+            con.close();
 
         } catch (SQLException e) {
             Logger.getLogger(Return.class.getName()).log(Level.SEVERE, null, e);

@@ -214,46 +214,6 @@ public class Rent extends DatabaseConnectionHandler {
             //e.printStackTrace();
         }
 
-        /*Connection con = null;
-        try {
-            con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu", "ora_colenliu", "a15539159"); {
-                try (PreparedStatement ppst = con.prepareStatement("INSERT INTO rentals (customers_dlicense, vehicles_license" +
-                        "timeperiod_fromdate, timeperiod_fromtime, timeperiod_todate, timeperiod_totime, rentals_odometer," +
-                        "rentals_cardname, rentals_cardno, rentals_expdate)" +
-                        "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
-                    System.out.println("INSERT INTO rentals (customers_dlicense, vehicles_license, timeperiod_fromdate," +
-                            "timeperiod_fromtime, timeperiod_todate, timeperiod_totime, rentals_odometer, rentals_cardname," +
-                            "rentals_cardno, rentals_expdate)" +
-                            "values (" + dLicense + "," + vLicense + "," + fromDate + "," + fromTime + "," + toDate + "," +
-                            toTime + "," + odometer + "," + cardName + "," + cardNo + "," + expDate + ")");
-
-                    ppst.setString(1, dLicense);
-                    ppst.setString(2, vLicense);
-                    ppst.setDate(3, fromDate);
-                    ppst.setTimestamp(4, fromTime);
-                    ppst.setDate(5, toDate);
-                    ppst.setTimestamp(6, toTime);
-                    ppst.setInt(7, odometer);
-                    ppst.setString(8, cardName);
-                    ppst.setInt(9, cardNo);
-                    ppst.setDate(10, expDate);
-
-                    ppst.executeUpdate();
-
-                    // test to see if rent operation successful
-                    try (ResultSet rs = ppst.getGeneratedKeys()) {
-                        while (rs.next()) {
-                            this.dLicense = rs.getString(1);
-                        }
-                    }
-                }
-            }
-
-
-        } catch (SQLException e) {
-            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
-        }*/
-
         try {
             con.close();
         } catch (SQLException e) {
